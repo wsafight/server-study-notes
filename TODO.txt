@@ -268,3 +268,9 @@ bin log
 https://www.kancloud.cn/thinkphp/mysql-parallel-applier/45907
 
 定期用 pt-duplicate-key-checker 工具检查并删除重复的索引。比如 index idx1(a, b) 索引已经涵盖了 index idx2(a)，就可以删除 idx2 索引了。
+
+https://github.com/XiaoMi/soar
+
+https://mariadb.com/kb/en/subquery-optimizations-map/
+
+http://www.unofficialmysqlguide.com/optimizer-trace.html
