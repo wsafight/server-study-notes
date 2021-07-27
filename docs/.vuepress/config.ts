@@ -1,5 +1,6 @@
 import { defineUserConfig } from 'vuepress'
 import type { DefaultThemeOptions } from 'vuepress'
+import { navbar, sidebar } from './configs'
 
 export default defineUserConfig<DefaultThemeOptions>({
   base: '/MySQL-notes/',
@@ -21,10 +22,17 @@ export default defineUserConfig<DefaultThemeOptions>({
     locales: {
       '/': {
         selectLanguageName: '简体中文',
-
+        selectLanguageText: '选择语言',
+        selectLanguageAriaLabel: '选择语言',
+        navbar: navbar.zh,
+        sidebar: sidebar.zh,
       },
       '/en/': {
         selectLanguageName: 'English',
+        selectLanguageText: 'Languages',
+        selectLanguageAriaLabel: 'Languages',
+        navbar: navbar.en,
+        sidebar: sidebar.en,
       },
     },
   }

@@ -4,7 +4,7 @@ heroText: MySQL notes
 tagline: Record using MySQL database
 actions:
 - text: Get Start
-  link: /notes/getting-started.html
+  link: /en/notes/getting-started.html
   type: primary
 features:
 - title: performance
