@@ -1,1 +1,1 @@
-# MySQL cheat sheet
+# MySQL notes

@@ -1,3 +1,3 @@
-# MySQL 备忘录
+# MySQL 笔记
 
 
