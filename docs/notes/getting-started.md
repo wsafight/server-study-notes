@@ -1,2 +1,3 @@
-# Introduction
-This document records MySQL installation and configuration, some common optimization skills, security and defense analysis, as well as some special usage and common error analysis when writing SQL statements.
+# 介绍
+
+本文档记录了 MYSQL 安装与配置，常见的一些优化技巧,安全与防御分析，以及平时写 SQL 语句时候的一些特殊用法和常见错误分析。
