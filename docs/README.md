@@ -5,8 +5,8 @@ tagline: 记录使用 MySQL 数据库
 actions:
 - text: 快速上手
   link: /zh/notes/getting-started.html
-  type: primary
-  features:
+  type: primary 
+features:
 - title: 性能
   details: 一些常见的优化技术
 - title: 错误记录
