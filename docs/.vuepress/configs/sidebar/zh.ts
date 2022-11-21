@@ -20,6 +20,7 @@ export const zh: SidebarConfig = {
       text: '分析与优化',
       children: [
         '/performance/explain.md',
+        '/performance/re-building.md',
         '/performance/database-index.md',
         '/performance/profiling.md',
         '/performance/config.md',
