@@ -30,4 +30,4 @@ ALTER TABLE tbl_name FORCE, ALGORITHM=INPLACE, LOCK=NONE;
 
 表重建也会增快表的查询速度，这是由于数据库“空洞“多了，要扫描的页越来越多导致的。
 
-如果需要较为安全的操作，可以学习使用 [gh-ost](https://github.com/github/gh-ost) 。
+如果需要较为安全的操作，可以学习使用 github 开发的 [gh-ost](https://github.com/github/gh-ost) 。
