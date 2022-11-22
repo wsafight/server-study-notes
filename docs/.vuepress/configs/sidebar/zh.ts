@@ -32,6 +32,7 @@ export const zh: SidebarConfig = {
     {
       text: '安全与错误',
       children: [
+        '/error/auto-increment.md',
         '/error/lose-data.md',
         '/error/number-null.md',
         '/error/split-page.md',
