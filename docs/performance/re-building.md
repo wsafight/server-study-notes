@@ -30,4 +30,8 @@ ALTER TABLE tbl_name FORCE, ALGORITHM=INPLACE, LOCK=NONE;
 
 表重建也会增快表的查询速度，这是由于数据库“空洞“多了，要扫描的页越来越多导致的。
 
+如果表本省没有“空洞”，使用表重建反而会把表变大。
+- 在重建表的时，InnoDB 不会把整张表占满，每个页留了 1/16 给后续的更新用。
+- 在DDL期间，如果刚好有外部的DML在执行，这期间可能会引入一些新的空洞。
+
 如果需要较为安全的操作，可以学习使用 github 开发的 [gh-ost](https://github.com/github/gh-ost) 。
