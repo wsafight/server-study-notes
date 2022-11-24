@@ -11,6 +11,7 @@ export const zh: SidebarConfig = {
         '/notes/group_concat.md',
         '/notes/temp-table.md',
         '/notes/pt-duplicate-key-checker.md',
+        '/nots/count.md',
         '/notes/binlog.md',
         '/notes/uid.md',
       ],
