@@ -3547,10 +3547,10 @@ vue@^3.1.4:
     "@vue/runtime-dom" "3.1.5"
     "@vue/shared" "3.1.5"
 
-vuepress@^2.0.0-beta.22:
+vuepress@2.0.0-beta.22:
   version "2.0.0-beta.22"
-  resolved "https://registry.nlark.com/vuepress/download/vuepress-2.0.0-beta.22.tgz#46a3dbc9ea0e9f63e74eda7e19264f266fd8c843"
-  integrity sha1-RqPbyeoOn2PnTtp+GSZPJm/YyEM=
+  resolved "https://registry.yarnpkg.com/vuepress/-/vuepress-2.0.0-beta.22.tgz#46a3dbc9ea0e9f63e74eda7e19264f266fd8c843"
+  integrity sha512-CGylWtEh2NWZJyJ3hwztCv6MmjXg2XLME4xOWF2PoKCL81a/7AacTwwbpISwEBNPcyawUxvu4ni33jX5EdSy3w==
   dependencies:
     "@vuepress/bundler-webpack" "2.0.0-beta.22"
     "@vuepress/cli" "2.0.0-beta.22"
