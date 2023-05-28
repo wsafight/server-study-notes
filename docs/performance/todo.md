@@ -1,0 +1,7 @@
+int 21 亿 ？  INT UNSIGNED  43 亿？
+
+DATETIME 8 
+
+```SQL
+INET_ATON INET_NTOA
+```

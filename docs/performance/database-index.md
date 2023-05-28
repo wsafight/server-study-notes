@@ -48,3 +48,33 @@ vc_Name,vc_City
 vc_Name
 
 只是在大数据导入时,可以先删除索引,再批量插入数据,最后再添加索引;
+
+使用查询提示
+
+- USE INDEX
+- FORCE INDEX
+- iGNORE INDEX
+
+使用 USE 提示会让 MySOL 从指定的索引中选择一个。FORCE 会对基于开销的优化器产生影响，让优化器更倾向于索引扫描而不是全表扫描。
+
+添加或者改变表上的索引并不会影响到 一个在特定索引中指 定的硬编码 SQL 语句，所以查询提示应该是你最后考虑的方案。
+
+
+频繁执行且速度很快的 SQL 语句通常被认为不是必须要调整的。但提升这些查询的速度能够为系统资源带来非常大的益处， 这些资源使得你的数据库系统能够处理更多的 SQL 语句。
+
+SHOW INDEX STATISTICS 是谷歌的一个补丁，收集 sql 语句并监控引擎使用。
+
+
+[mysqld]
+全面查询日志
+general_log=1
+general_log_file=/path/to/file
+
+慢 sql 日志
+slow_query_log=1
+slow_query_log_file=/path/to/file 
+long_query_time=0.2
+log_output=FILE
+
+二进制日志
+log_bin=/path/to/file
