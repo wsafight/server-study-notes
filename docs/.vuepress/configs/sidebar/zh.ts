@@ -28,6 +28,7 @@ export const zh: SidebarConfig = {
         '/performance/database-index.md',
         '/performance/profiling.md',
         '/performance/config.md',
+        '/performance/off-page.md',
         '/performance/soar.md'
       ],
     },
