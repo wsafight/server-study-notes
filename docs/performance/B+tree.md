@@ -1,0 +1,14 @@
+# B+ 树
+
+我们都知道，InnoDB 引擎使用了 B+ 树作为索引。而数据在不断插和删除的过程会变化高度。那么 B+ 树在层级变化时候为什么不会出现性能呢问题？
+
+先说结论，按照索引会顺序插入的情况。B+ 树层级变化只会影响上层索引和对应叶子结点的数据。而 B+ 树索引的上层是常驻内存的，所以不会出现性能问题。当前分析不会涉及 MySQL 源码。
+
+我们可以先看一下对应示例的 [B+tree visualization](https://visual-algo.firebaseapp.com/)
+
+![B+ +tree visualization](./B%2Btreevisualization.png)
+
+
+
+
+
