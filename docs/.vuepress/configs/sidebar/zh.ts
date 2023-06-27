@@ -29,7 +29,7 @@ export const zh: SidebarConfig = {
         '/performance/profiling.md',
         '/performance/config.md',
         '/performance/off-page.md',
-        '/performance/B+tree.md',
+        '/performance/B-plus-tree.md',
         '/performance/soar.md'
       ],
     },
