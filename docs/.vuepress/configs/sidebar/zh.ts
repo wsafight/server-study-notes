@@ -33,6 +33,7 @@ export const zh: SidebarConfig = {
         '/performance/why-b-plus-tree.md',
         '/performance/soar.md',
         '/performance/low-dimension-index.md',
+        '/performance/hot-update.md'
       ],
     },
   ],
