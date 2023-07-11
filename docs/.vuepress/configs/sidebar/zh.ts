@@ -31,7 +31,8 @@ export const zh: SidebarConfig = {
         '/performance/off-page.md',
         '/performance/b-plus-tree.md',
         '/performance/why-b-plus-tree.md',
-        '/performance/soar.md'
+        '/performance/soar.md',
+        '/performance/low-dimension-index.md',
       ],
     },
   ],
