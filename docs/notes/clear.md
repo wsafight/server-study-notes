@@ -58,4 +58,4 @@ ORDER BY
   DATA_FREE DESC;
 ```
 
-根据当前的表，我们再去执行重建表即可。具体执行可参考 [重建表优化空间与查询速度](../performance/re-building)。
+根据当前的表，我们再去执行重建表即可。具体执行可参考 [重建表优化空间与查询速度](../performance/re-building.html)。
