@@ -15,7 +15,8 @@ export const zh: SidebarConfig = {
         '/notes/binlog.md',
         '/notes/uid.md',
         '/notes/over-max-id.md',
-        '/notes/subquery-limit.md'
+        '/notes/subquery-limit.md',
+        '/notes/clear.md'
       ],
     },
   ],
