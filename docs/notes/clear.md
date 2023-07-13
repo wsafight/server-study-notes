@@ -1,6 +1,6 @@
 # 清理过期数据
 
-通常来说，如果当前表存储的是日志或时效信息。往往涉及到删除过期数据的问题。
+通常来说，如果当前表存储的是日志或时效信息。往往涉及到归档并删除过期数据的问题。
 
 这时候我们需要定时任务删除。例如晚上 2 点多开始任务。
 
@@ -42,3 +42,20 @@ DELETE FROM table_name WHERE id in (?)
 当然，上述方案也有一定问题，如果前两千行的数据均大于 90 天前的数据，或者中间的 2000 行数据出现了 大于 90 天前的数据，但后面又出现了当前数据小于 90 天前的数据。这样的话就无法正常的删除数据了。
 
 但实际上 id 是自增的，出现这样的数据可能性也比较小。可以忽略不计。
+
+清除完成后开发者就需要重建表。此时我们 information_schema.TABLES 得到对应库的已经分配但并未使用的数据大小。
+
+```SQL
+SELECT
+  TABLE_NAME,
+  DATA_FREE
+FROM
+  information_schema.TABLES
+WHERE
+  TABLE_SCHEMA = 'lib_name'
+  AND DATA_FREE > 104857600
+ORDER BY
+  DATA_FREE DESC;
+```
+
+根据当前的表，我们再去执行重建表即可。具体执行可参考 [重建表优化空间与查询速度](../performance/re-building)。
