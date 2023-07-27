@@ -36,6 +36,7 @@ export const zh: SidebarConfig = {
         '/performance/low-dimension-index.md',
         '/performance/hot-update.md',
         '/performance/icp.md',
+        '/performance/limit.md'
       ],
     },
   ],
