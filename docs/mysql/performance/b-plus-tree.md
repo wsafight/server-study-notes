@@ -6,7 +6,7 @@
 
 我们可以先看一下对应示例的 [B+tree visualization](https://visual-algo.firebaseapp.com/),通过不断模拟增加减少，我们就可以看出修改的结点数据。
 
-![B+ +tree visualization](https://raw.githubusercontent.com/wsafight/MySQL-notes/main/docs/performance/B%2Btreevisualization.png)
+![B+ +tree visualization](https://raw.githubusercontent.com/wsafight/server-study-notes//main/docs/performance/B%2Btreevisualization.png)
 
 代码实现在 [b-plus-tree](https://github.com/wsafight/b-plus-tree) 中，完成后会进行源码解读。
 
