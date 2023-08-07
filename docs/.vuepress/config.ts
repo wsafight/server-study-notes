@@ -3,7 +3,7 @@ import type { DefaultThemeOptions } from 'vuepress'
 import { navbar, sidebar } from './configs'
 
 export default defineUserConfig<DefaultThemeOptions>({
-  base: '/server-study-notes//',
+  base: '/server-study-notes/',
   locales: {
     // 键名是该语言所属的子路径
     // 作为特例，默认语言可以使用 '/' 作为其路径。

@@ -2,7 +2,7 @@
   "name": "server-study-notes",
   "version": "0.0.1",
   "main": "index.js",
-  "repository": "git@github.com:wsafight/server-study-notes/.git",
+  "repository": "git@github.com:wsafight/server-study-notes.git",
   "author": "wsafight <984292420@qq.com>",
   "license": "MIT",
   "private": false,
