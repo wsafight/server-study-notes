@@ -4,8 +4,12 @@ import { version } from '../meta'
 
 export const zh: NavbarConfig = [
   {
-    text: 'MySql',
-    link: '/mysql/notes/',
+    text: 'MySQL',
+    children: [
+      '/mysql/notes/README.md', 
+      '/mysql/performance/README.md',
+      '/mysql/error/README.md',
+    ],
   },
   {
     text: 'Linux',

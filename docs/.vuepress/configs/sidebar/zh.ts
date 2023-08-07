@@ -5,6 +5,7 @@ export const zh: SidebarConfig = {
     {
       text: '操作与管理',
       children: [
+        '/mysql/notes/README.md',
         '/mysql/notes/paradigm.md',
         '/mysql/notes/sub-treasury.md',
         '/mysql/notes/split-table.md',
@@ -23,6 +24,7 @@ export const zh: SidebarConfig = {
     {
       text: '分析与优化',
       children: [
+        '/mysql/performance/README.md',
         '/mysql/performance/explain.md',
         '/mysql/performance/re-building.md',
         '/mysql/performance/database-index.md',
@@ -41,6 +43,7 @@ export const zh: SidebarConfig = {
     {
       text: '安全与错误',
       children: [
+        '/mysql/error/README.md',
         '/mysql/error/auto-increment.md',
         '/mysql/error/lose-data.md',
         '/mysql/error/number-null.md',
