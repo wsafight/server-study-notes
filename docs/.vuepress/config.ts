@@ -9,13 +9,13 @@ export default defineUserConfig<DefaultThemeOptions>({
     // 作为特例，默认语言可以使用 '/' 作为其路径。
     '/': {
       lang: 'zh-CN',
-      title: 'MySQL 笔记',
-      description: '记录使用 Mysql 数据库',
+      title: '服务端学习笔记',
+      description: '记录使用服务端中遇到的各种问题',
     },
     '/en/': {
       lang: 'en-US',
-      title: 'MySQL notes',
-      description: 'Record using MySQL database',
+      title: 'Server study notes',
+      description: 'Record various problems encountered in using the server',
     },
   },
   themeConfig: {

@@ -1,1 +1,1 @@
-# MySQL notes
+# Server study notes

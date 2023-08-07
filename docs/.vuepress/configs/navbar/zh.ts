@@ -4,15 +4,15 @@ import { version } from '../meta'
 
 export const zh: NavbarConfig = [
   {
-    text: '设计与使用',
-    link: '/notes/',
+    text: 'MySql',
+    link: '/mysql/notes/',
   },
   {
-    text: '分析与优化',
-    link: '/performance/',
+    text: 'Linux',
+    link: '/linux/notes/',
   },
-  {
-    text: '安全与错误',
-    link: '/error/',
-  },
+  // {
+  //   text: '安全与错误',
+  //   link: '/error/',
+  // },
 ]

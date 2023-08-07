@@ -1,55 +1,68 @@
 import type { SidebarConfig } from '@vuepress/theme-default'
 
 export const zh: SidebarConfig = {
-  '/notes/': [
+  '/mysql/': [
     {
-      text: '设计与使用',
+      text: '操作与管理',
       children: [
-        '/notes/paradigm.md',
-        '/notes/sub-treasury.md',
-        '/notes/split-table.md',
-        '/notes/group_concat.md',
-        '/notes/temp-table.md',
-        '/notes/pt-duplicate-key-checker.md',
-        '/notes/count.md',
-        '/notes/binlog.md',
-        '/notes/uid.md',
-        '/notes/over-max-id.md',
-        '/notes/subquery-limit.md',
-        '/notes/clear.md',
-        '/notes/match.md'
+        '/mysql/notes/paradigm.md',
+        '/mysql/notes/sub-treasury.md',
+        '/mysql/notes/split-table.md',
+        '/mysql/notes/group_concat.md',
+        '/mysql/notes/temp-table.md',
+        '/mysql/notes/pt-duplicate-key-checker.md',
+        '/mysql/notes/count.md',
+        '/mysql/notes/binlog.md',
+        '/mysql/notes/uid.md',
+        '/mysql/notes/over-max-id.md',
+        '/mysql/notes/subquery-limit.md',
+        '/mysql/notes/clear.md',
+        '/mysql/notes/match.md'
       ],
     },
-  ],
-  '/performance/': [
     {
       text: '分析与优化',
       children: [
-        '/performance/explain.md',
-        '/performance/re-building.md',
-        '/performance/database-index.md',
-        '/performance/profiling.md',
-        '/performance/config.md',
-        '/performance/off-page.md',
-        '/performance/b-plus-tree.md',
-        '/performance/why-b-plus-tree.md',
-        '/performance/soar.md',
-        '/performance/low-dimension-index.md',
-        '/performance/hot-update.md',
-        '/performance/icp.md',
-        '/performance/limit.md'
+        '/mysql/performance/explain.md',
+        '/mysql/performance/re-building.md',
+        '/mysql/performance/database-index.md',
+        '/mysql/performance/profiling.md',
+        '/mysql/performance/config.md',
+        '/mysql/performance/off-page.md',
+        '/mysql/performance/b-plus-tree.md',
+        '/mysql/performance/why-b-plus-tree.md',
+        '/mysql/performance/soar.md',
+        '/mysql/performance/low-dimension-index.md',
+        '/mysql/performance/hot-update.md',
+        '/mysql/performance/icp.md',
+        '/mysql/performance/limit.md'
       ],
     },
-  ],
-  '/error/': [
     {
       text: '安全与错误',
       children: [
-        '/error/auto-increment.md',
-        '/error/lose-data.md',
-        '/error/number-null.md',
-        '/error/split-page.md',
-        '/error/xss.md',
+        '/mysql/error/auto-increment.md',
+        '/mysql/error/lose-data.md',
+        '/mysql/error/number-null.md',
+        '/mysql/error/split-page.md',
+        '/mysql/error/xss.md',
+      ],
+    },
+  ],
+  '/linux/': [
+    {
+      text: '操作与管理',
+      children: [
+      ],
+    },
+    {
+      text: '分析与优化',
+      children: [
+      ],
+    },
+    {
+      text: '安全与错误',
+      children: [
       ],
     },
   ],
