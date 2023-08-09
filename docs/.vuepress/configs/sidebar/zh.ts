@@ -18,7 +18,8 @@ export const zh: SidebarConfig = {
         '/mysql/notes/over-max-id.md',
         '/mysql/notes/subquery-limit.md',
         '/mysql/notes/clear.md',
-        '/mysql/notes/match.md'
+        '/mysql/notes/match.md',
+        '/mysql/notes/procedure.md'
       ],
     },
     {
