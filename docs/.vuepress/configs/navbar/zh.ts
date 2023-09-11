@@ -16,7 +16,13 @@ export const zh: NavbarConfig = [
     children: [
       '/linux/notes/README.md', 
       '/linux/performance/README.md',
-      '/linux/error/README.md',
     ],
   },
+  {
+    text: 'Redis',
+    children: [
+      '/redis/notes/README.md', 
+      '/redis/performance/README.md', 
+    ],
+  }
 ]

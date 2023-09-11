@@ -58,17 +58,27 @@ export const zh: SidebarConfig = {
     {
       text: '操作与管理',
       children: [
+        '/linux/notes/README.md',
       ],
     },
     {
       text: '分析与优化',
       children: [
-        '/mysql/performance/README.md',
+        '/linux/performance/README.md',
+      ],
+    },
+  ],
+  '/redis/': [
+    {
+      text: '操作与管理',
+      children: [
+        '/redis/notes/README.md',
       ],
     },
     {
-      text: '安全与错误',
+      text: '分析与优化',
       children: [
+        '/redis/performance/README.md',
       ],
     },
   ],
