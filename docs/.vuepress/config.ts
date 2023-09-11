@@ -1,8 +1,7 @@
-import { defineUserConfig } from 'vuepress'
-import type { DefaultThemeOptions } from 'vuepress'
+import { defaultTheme, defineUserConfig } from 'vuepress'
 import { navbar, sidebar } from './configs'
 
-export default defineUserConfig<DefaultThemeOptions>({
+export default defineUserConfig({
   base: '/server-study-notes/',
   locales: {
     // 键名是该语言所属的子路径
@@ -18,7 +17,7 @@ export default defineUserConfig<DefaultThemeOptions>({
       description: 'Record various problems encountered in using the server',
     },
   },
-  themeConfig: {
+  theme: defaultTheme({
     locales: {
       '/': {
         selectLanguageName: '简体中文',
@@ -35,5 +34,5 @@ export default defineUserConfig<DefaultThemeOptions>({
         sidebar: sidebar.en,
       },
     },
-  }
+  })
 })
