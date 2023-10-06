@@ -73,6 +73,8 @@ export const zh: SidebarConfig = {
       text: '操作与管理',
       children: [
         '/redis/notes/README.md',
+        '/redis/notes/regulations.md',
+        '/redis/notes/pika.md',
       ],
     },
     {
