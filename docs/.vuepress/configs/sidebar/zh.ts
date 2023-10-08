@@ -81,6 +81,7 @@ export const zh: SidebarConfig = {
       text: '分析与优化',
       children: [
         '/redis/performance/README.md',
+        '/redis/performance/pipeline.md',
       ],
     },
   ],
