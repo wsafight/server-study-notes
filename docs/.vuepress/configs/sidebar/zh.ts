@@ -11,6 +11,7 @@ export const zh: SidebarConfig = {
         '/mysql/notes/split-table.md',
         '/mysql/notes/group_concat.md',
         '/mysql/notes/temp-table.md',
+        '/mysql/notes/sync-table.md',
         '/mysql/notes/pt-duplicate-key-checker.md',
         '/mysql/notes/count.md',
         '/mysql/notes/binlog.md',
