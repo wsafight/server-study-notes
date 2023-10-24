@@ -68,6 +68,12 @@ export const zh: SidebarConfig = {
         '/linux/performance/README.md',
       ],
     },
+    {
+      text: '网络',
+      children: [
+        '/linux/network/README.md',
+      ],
+    },
   ],
   '/redis/': [
     {
