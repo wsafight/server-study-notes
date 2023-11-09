@@ -66,7 +66,9 @@ export const zh: SidebarConfig = {
       text: '分析与优化',
       children: [
         '/linux/performance/README.md',
-        '/linux/performance/uptime.md'
+        '/linux/performance/uptime.md',
+        '/linux/performance/sysstat-mpstat.md',
+        '/linux/performance/sysstat-pidstat.md',
       ],
     },
     {
