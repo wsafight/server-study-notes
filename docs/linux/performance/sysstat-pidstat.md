@@ -8,8 +8,5 @@ pidstat 是一个进程性能分析工具，用来实时查看进程的 CPU、�
 apt install sysstat
 ```
 
-如果你用的不是超级管理员。可能需要使用 sudo 命令来执行。
-
-
 
 注：以上所有操作均在虚拟机 Ubuntu 22.04 GUI 系统。

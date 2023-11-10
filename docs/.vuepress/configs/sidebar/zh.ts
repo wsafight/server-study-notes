@@ -69,6 +69,10 @@ export const zh: SidebarConfig = {
         '/linux/performance/uptime.md',
         '/linux/performance/sysstat-mpstat.md',
         '/linux/performance/sysstat-pidstat.md',
+        '/linux/performance/sysstat-iostat.md',
+        '/linux/performance/stress.md',
+        '/linux/performance/vmstat.md',
+
       ],
     },
     {
