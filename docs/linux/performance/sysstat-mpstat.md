@@ -16,9 +16,7 @@ mpstat
 
 ![mpstat](./sysstat-mpstat.png)
 
-这里只能看到全部 CPU 指标数据，没法看到每个对应的 CPU 状态。添加参数。
-
-# -P ALL 表示监控所有CPU，后面数字5表示间隔5秒后输出一组数据
+这里只能看到全部 CPU 指标数据，没法看到每个对应的 CPU 状态。添加参数即可。
 
 ```bash
 # -P ALL 表示监控所有的 CPU
