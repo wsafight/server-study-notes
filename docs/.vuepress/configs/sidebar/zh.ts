@@ -20,7 +20,8 @@ export const zh: SidebarConfig = {
         '/mysql/notes/subquery-limit.md',
         '/mysql/notes/clear.md',
         '/mysql/notes/match.md',
-        '/mysql/notes/procedure.md'
+        '/mysql/notes/procedure.md',
+        '/mysql/notes/cte.md'
       ],
     },
     {
