@@ -2,7 +2,7 @@
 
 在 MySQL 8.0 后版本后可以使用公用表表达式 CTE（Common Table Expressions）。通过 CTE 可以多次引用以及自引用。比子查询更加强大。
 
-对应的语句如下所示：
+对应的语法如下所示：
 
 ```SQL
 WITH [RECURSIVE]
@@ -11,6 +11,8 @@ WITH [RECURSIVE]
     ...
 SELECT  * FROM cte_name
 ```
+
+写一下对应的查询语句测试看看：
 
 ```SQL
 WITH hero (name, age) AS   -- 命名表和列名
@@ -22,7 +24,7 @@ WITH hero (name, age) AS   -- 命名表和列名
 SELECT name, age FROM hero;
 ```
 
-返回表格如下所示：
+数据如下所示：
 
 | name | age |
 | ---- | --- |
@@ -32,17 +34,19 @@ SELECT name, age FROM hero;
 可以多次引用
 
 ```SQL
-WITH hero (name, age) AS   --
-(		-- 这里组装了一个临时表一共两列
+WITH hero (name, age) AS   -- 命名表和列名
+(
   SELECT '白牛', 20
   UNION ALL
   SELECT '隐刺', 20
 )
-SELECT name, age FROM hero
-  UNION ALL
-SELECT name, age FROM hero
+SELECT name, age FROM hero -- 第一次使用
+  UNION ALL 
+SELECT name, age FROM hero -- 第二次使用
 ;
 ```
+
+数据如下所示：
 
 | name | age |
 | ---- | --- |
@@ -51,14 +55,14 @@ SELECT name, age FROM hero
 | 白牛 | 20  |
 | 隐刺 | 20  |
 
-还可以递归调用
+CTE 还可以递归调用，下面使用递归生成多条数据：
 
 ```SQL
-WITH RECURSIVE num as (  -- 使用 RECURSIVE 声明可以递归调用
+WITH RECURSIVE num as ( -- 使用 RECURSIVE 声明可以递归调用
 	SELECT 1 AS count
 	UNION ALL
-	SELECT count + 1 FROM num    -- 这里引用了自身
-		WHERE count < 2  -- 当 count 大于 1 就退出
+	SELECT count + 1 FROM num -- 这里引用了自身
+		WHERE count < 2  -- 当 count 大于 1 就结束
 )
 SELECT * FROM num
 ```
@@ -70,7 +74,7 @@ SELECT * FROM num
 
 如此，开发者就可以使用 CTE 递归调用表获取部门等树形结构了（注：全部获取在业务中处理更好，兼容更强）。
 
-表结构如下所示：
+部门表结构如下所示：
 
 ```SQL
 CREATE TABLE `departments` (
@@ -142,3 +146,4 @@ WHERE parent_id = 1
 | 4   | 1         | 销售 2 组   |
 | 3   | 2         | 销售 1 小组 |
 
+对应的[官方文档 CTE](https://dev.mysql.com/doc/refman/8.2/en/with.html) .
