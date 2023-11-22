@@ -21,7 +21,7 @@ WITH hero (name, age) AS   -- 命名表和列名
   UNION ALL
   SELECT '隐刺', 20
 )
-SELECT name, age FROM hero;
+SELECT name, age FROM hero
 ```
 
 数据如下所示：
@@ -43,7 +43,6 @@ WITH hero (name, age) AS   -- 命名表和列名
 SELECT name, age FROM hero -- 第一次使用
   UNION ALL 
 SELECT name, age FROM hero -- 第二次使用
-;
 ```
 
 数据如下所示：
@@ -83,7 +82,7 @@ CREATE TABLE `departments` (
   `name` varchar(255) NOT NULL,
   `path` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci
 ```
 
 表数据如下所示
