@@ -21,7 +21,8 @@ export const zh: SidebarConfig = {
         '/mysql/notes/clear.md',
         '/mysql/notes/match.md',
         '/mysql/notes/procedure.md',
-        '/mysql/notes/cte.md'
+        '/mysql/notes/cte.md',
+        '/mysql/notes/update-line-lock.md'
       ],
     },
     {
