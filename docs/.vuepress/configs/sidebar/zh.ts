@@ -64,6 +64,8 @@ export const zh: SidebarConfig = {
       text: '操作与管理',
       children: [
         '/linux/notes/README.md',
+        '/linux/notes/account-expired.md',
+        '/linux/notes/instance-quota.md'
       ],
     },
     {
