@@ -23,7 +23,8 @@ export const zh: SidebarConfig = {
         '/mysql/notes/procedure.md',
         '/mysql/notes/cte.md',
         '/mysql/notes/update-line-lock.md',
-        '/mysql/notes/exclusive-lock.md'
+        '/mysql/notes/exclusive-lock.md',
+        '/mysql/notes/having.md',
       ],
     },
     {
