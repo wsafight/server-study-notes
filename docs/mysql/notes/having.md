@@ -9,7 +9,7 @@ SELECT userId,count(*) AS total
 FROM table_name
 where get_time > '2024-01-01 00:00:00'
 group by userId
-having count(*) > 10000
+having total > 10000
 limit 100
 ```
 
