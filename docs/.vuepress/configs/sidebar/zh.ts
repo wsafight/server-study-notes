@@ -48,7 +48,8 @@ export const zh: SidebarConfig = {
         '/mysql/performance/icp.md',
         '/mysql/performance/limit.md',
         '/mysql/performance/data-skew.md',
-        '/mysql/performance/transaction-isolation.md'
+        '/mysql/performance/transaction-isolation.md',
+        '/mysql/performance/load-data-infile.md',
       ],
     },
     {
