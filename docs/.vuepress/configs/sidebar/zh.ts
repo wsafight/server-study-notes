@@ -32,6 +32,7 @@ export const zh: SidebarConfig = {
       children: [
         '/mysql/performance/README.md',
         '/mysql/performance/architecture.md',
+        '/mysql/performance/methodology.md',
         '/mysql/performance/explain.md',
         '/mysql/performance/slow-query-log.md',
         '/mysql/performance/re-building.md',
