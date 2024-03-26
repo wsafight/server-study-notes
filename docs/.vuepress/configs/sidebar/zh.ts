@@ -31,6 +31,7 @@ export const zh: SidebarConfig = {
       text: '分析与优化',
       children: [
         '/mysql/performance/README.md',
+        '/mysql/performance/architecture.md',
         '/mysql/performance/explain.md',
         '/mysql/performance/re-building.md',
         '/mysql/performance/database-index.md',
