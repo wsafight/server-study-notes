@@ -1,8 +1,8 @@
 # 使用 EXPLAIN 来分析 SQL 查询问题
 
-Query Execution Plan 是查询执行计划。而 EXPLAIN 可以帮助开发人员分析SQL问题,explain 显示了 mysql 如何使用索引来处理select语句以及连接表,可以帮助选择更好的索引和写出更优化的查询语句.
+Query Execution Plan 是查询执行计划。而 EXPLAIN 可以帮助开发人员分析 SQL 问题,explain 显示了 mysql 如何使用索引来处理select语句以及连接表,可以帮助选择更好的索引和写出更优化的查询语句。
 
-当 MysQL 要执行一个SQL 查询的时候，它首先会对该 SOL 语句进行语法检查，然后构造一个 QEP, QEP 决定了 MySQL 从底层存储引擎中获取信息的方式。如果想要查看 MysQL 查询优 化器为 SQL 语句构造的 QEP，只需要在 SELECT 语句前加上如下的EXPLAIN 关键字前缀。即：
+当 MysQL 要执行一个 SQL 查询的时候，它首先会对该 SOL 语句进行语法检查，然后构造一个 QEP, QEP 决定了 MySQL 从底层存储引擎中获取信息的方式。如果想要查看 MysQL 查询优 化器为 SQL 语句构造的 QEP，只需要在 SELECT 语句前加上如下的EXPLAIN 关键字前缀。即：
 
 ```SQL
 EXPLAIN SELECT * FROM inventory WHERE item_id = 1232
