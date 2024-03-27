@@ -38,6 +38,7 @@ export const zh: SidebarConfig = {
         '/mysql/performance/re-building.md',
         '/mysql/performance/database-index.md',
         '/mysql/performance/profiling.md',
+        '/mysql/performance/performance-schema.md',
         '/mysql/performance/config.md',
         '/mysql/performance/off-page.md',
         '/mysql/performance/b-plus-tree.md',

@@ -25,3 +25,8 @@ show profile for query 6;
 show profile all for query 6;
 show profile cpu,block io,memory,swaps,context switches,source for query 6;
 ```
+
+
+SHOW PROFILE 与 SHOW PROFILES 已被弃用。预计它们会在未来的 MySQL 版本中被删除（MySQL 8.3 文档）。MySQL 推荐使用 Performance Schema 来进行分析。
+
+MySQL 8.3 之前放心使用。
