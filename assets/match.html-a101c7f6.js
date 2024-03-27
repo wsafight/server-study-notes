@@ -1,0 +1,1 @@
+import{_ as t,o as a,c,a as e,b as o}from"./app-3aae6edf.js";const r={},s=e("h1",{id:"使用-match-匹配字段",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#使用-match-匹配字段","aria-hidden":"true"},"#"),o(" 使用 match 匹配字段")],-1),n=[s];function _(h,d){return a(),c("div",null,n)}const m=t(r,[["render",_],["__file","match.html.vue"]]);export{m as default};

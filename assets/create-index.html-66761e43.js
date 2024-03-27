@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-6b48335a","path":"/mysql/performance/create-index.html","title":"建立索引","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1691424102000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":1}]},"filePathRelative":"mysql/performance/create-index.md"}');export{e as data};

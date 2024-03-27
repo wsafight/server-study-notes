@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-564f3414","path":"/redis/notes/xcache.html","title":"","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1696603479000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":1}]},"filePathRelative":"redis/notes/xcache.md"}');export{e as data};

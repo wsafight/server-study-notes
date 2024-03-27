@@ -1,0 +1,1 @@
+import{_ as t,o as a,c as n,a as e,b as c}from"./app-3aae6edf.js";const o={},s=e("h1",{id:"操作与管理",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#操作与管理","aria-hidden":"true"},"#"),c(" 操作与管理")],-1),r=e("p",null,"本节记录了 Linux 基础工具使用。",-1),_=[s,r];function d(i,l){return a(),n("div",null,_)}const f=t(o,[["render",d],["__file","index.html.vue"]]);export{f as default};

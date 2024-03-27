@@ -1,0 +1,2 @@
+import{_ as n,o as s,c as t,a as e}from"./app-3aae6edf.js";const o={},a=e("p",null,"int 21 亿 ？ INT UNSIGNED 43 亿？",-1),l=e("p",null,"DATETIME 8",-1),c=e("div",{class:"language-SQL line-numbers-mode","data-ext":"SQL"},[e("pre",{class:"language-SQL"},[e("code",null,`INET_ATON INET_NTOA
+`)]),e("div",{class:"line-numbers","aria-hidden":"true"},[e("div",{class:"line-number"})])],-1),_=[a,l,c];function d(i,r){return s(),t("div",null,_)}const m=n(o,[["render",d],["__file","todo.html.vue"]]);export{m as default};

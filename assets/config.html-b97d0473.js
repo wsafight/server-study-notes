@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-60450cb2","path":"/mysql/performance/config.html","title":"设置优化","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1711472225000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":2}]},"filePathRelative":"mysql/performance/config.md"}');export{e as data};

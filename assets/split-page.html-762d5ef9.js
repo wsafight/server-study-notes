@@ -1,0 +1,2 @@
+import{_ as e,o as a,c as s,d as t}from"./app-3aae6edf.js";const i={},d=t(`<h1 id="分页负数攻击" tabindex="-1"><a class="header-anchor" href="#分页负数攻击" aria-hidden="true">#</a> 分页负数攻击</h1><div class="language-MYSQL line-numbers-mode" data-ext="MYSQL"><pre class="language-MYSQL"><code>select * from user_login_log order by id desc limit -40,20&quot;
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div>`,2),r=[d];function c(n,l){return a(),s("div",null,r)}const _=e(i,[["render",c],["__file","split-page.html.vue"]]);export{_ as default};

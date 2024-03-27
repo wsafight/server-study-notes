@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,a}from"./app-3aae6edf.js";const c={},_=a("p",null,"todo",-1),s=[_];function n(r,l){return t(),o("div",null,s)}const i=e(c,[["render",n],["__file","paradigm.html.vue"]]);export{i as default};

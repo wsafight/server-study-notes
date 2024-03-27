@@ -1,0 +1,5 @@
+import{_ as e,o as a,c as i,d as n}from"./app-3aae6edf.js";const d="/server-study-notes/assets/fun-time-e6d43cd7.png",s={},l=n(`<h1 id="常用时间函数" tabindex="-1"><a class="header-anchor" href="#常用时间函数" aria-hidden="true">#</a> 常用时间函数</h1><h2 id="获取时间" tabindex="-1"><a class="header-anchor" href="#获取时间" aria-hidden="true">#</a> 获取时间</h2><ul><li>CURDATE 返回当前日期</li><li>CURTIME 返回当前时间</li><li>NOW 返回当前日期时间</li></ul><div class="language-MySQL line-numbers-mode" data-ext="MySQL"><pre class="language-MySQL"><code>SELECT
+  CURDATE(),
+  CURTIME(),
+  NOW()
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="`+d+'" alt="Alt text"></p><h2 id="日期格式化" tabindex="-1"><a class="header-anchor" href="#日期格式化" aria-hidden="true">#</a> 日期格式化</h2><ul><li>DATE_FORMAT 按照 fmt 的格式，对日期 date 进行格式化</li></ul>',7),r=[l];function t(c,o){return a(),i("div",null,r)}const h=e(s,[["render",t],["__file","fun.html.vue"]]);export{h as default};

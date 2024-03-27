@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-592f2482","path":"/linux/notes/","title":"操作与管理","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1696603677000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":2}]},"filePathRelative":"linux/notes/README.md"}');export{t as data};
