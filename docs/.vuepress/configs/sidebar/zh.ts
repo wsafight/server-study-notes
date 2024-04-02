@@ -40,6 +40,7 @@ export const zh: SidebarConfig = {
         '/mysql/performance/profiling.md',
         '/mysql/performance/performance-schema.md',
         '/mysql/performance/config.md',
+        '/mysql/performance/not-null.md',
         '/mysql/performance/off-page.md',
         '/mysql/performance/b-plus-tree.md',
         '/mysql/performance/why-b-plus-tree.md',
