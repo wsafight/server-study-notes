@@ -15,6 +15,7 @@ export const zh: SidebarConfig = {
         '/mysql/notes/pt-duplicate-key-checker.md',
         '/mysql/notes/count.md',
         '/mysql/notes/binlog.md',
+        '/mysql/notes/auto-increment.md',
         '/mysql/notes/uid.md',
         '/mysql/notes/over-max-id.md',
         '/mysql/notes/subquery-limit.md',
