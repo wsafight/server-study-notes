@@ -7,6 +7,7 @@ export const zh: SidebarConfig = {
       children: [
         '/mysql/notes/README.md',
         '/mysql/notes/paradigm.md',
+        '/mysql/notes/create-spec.md',
         '/mysql/notes/sub-treasury.md',
         '/mysql/notes/split-table.md',
         '/mysql/notes/group_concat.md',
@@ -60,6 +61,7 @@ export const zh: SidebarConfig = {
       children: [
         '/mysql/error/README.md',
         '/mysql/error/auto-increment.md',
+        '/mysql/error/sum-npe.md',
         '/mysql/error/lose-data.md',
         '/mysql/error/number-null.md',
         '/mysql/error/split-page.md',
