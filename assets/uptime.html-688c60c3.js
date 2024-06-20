@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-32c3a61e","path":"/linux/performance/uptime.html","title":"解读 uptime 命令和平均负载","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1699490588000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":3}]},"filePathRelative":"linux/performance/uptime.md"}');export{e as data};

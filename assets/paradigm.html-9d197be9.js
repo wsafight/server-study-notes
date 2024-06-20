@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-54020e9a","path":"/en/notes/paradigm.html","title":"","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1627409616000,"contributors":[{"name":"jump_jump","email":"984292420@qq.com","commits":1}]},"filePathRelative":"en/notes/paradigm.md"}');export{e as data};

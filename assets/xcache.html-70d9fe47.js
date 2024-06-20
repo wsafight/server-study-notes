@@ -1,0 +1,1 @@
+import{_ as a,o as c,c as t,a as e,b as o}from"./app-6f934210.js";const r={},s=e("h1",{id:"架构师-23-06",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#架构师-23-06","aria-hidden":"true"},"#"),o(" 架构师 23-06")],-1),n=[s];function _(d,h){return c(),t("div",null,n)}const l=a(r,[["render",_],["__file","xcache.html.vue"]]);export{l as default};

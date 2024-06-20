@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-0ba42eea","path":"/mysql/performance/hot-update.html","title":"热点更新","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1691424102000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":1}]},"filePathRelative":"mysql/performance/hot-update.md"}');export{e as data};

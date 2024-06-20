@@ -1,0 +1,1 @@
+import{_ as t,o as c,c as n,a as e,b as o}from"./app-6f934210.js";const a={},s=e("h1",{id:"网络带宽",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#网络带宽","aria-hidden":"true"},"#"),o(" 网络带宽")],-1),_=e("p",null,"内网出网带宽不够用的情况下，",-1),r=[s,_];function d(i,l){return c(),n("div",null,r)}const u=t(a,[["render",d],["__file"," connect-num.html.vue"]]);export{u as default};

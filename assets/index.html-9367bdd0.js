@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-35c93aad","path":"/mysql/error/","title":"安全与错误","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1691425284000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":2}]},"filePathRelative":"mysql/error/README.md"}');export{t as data};

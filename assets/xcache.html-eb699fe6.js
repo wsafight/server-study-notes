@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-2bf3343a","path":"/redis/other/xcache.html","title":"架构师 23-06","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1718847432000,"contributors":[{"name":"jump-and-jump","email":"984292420@qq.com","commits":1}]},"filePathRelative":"redis/other/xcache.md"}');export{e as data};

@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-51edc452","path":"/linux/notes/instance-quota.html","title":"任务实例数量选配","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1705417616000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":1}]},"filePathRelative":"linux/notes/instance-quota.md"}');export{t as data};

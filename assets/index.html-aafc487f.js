@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-9f7ad8a8","path":"/redis/other/","title":"替代品","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1718847432000,"contributors":[{"name":"jump-and-jump","email":"984292420@qq.com","commits":1}]},"filePathRelative":"redis/other/README.md"}');export{e as data};

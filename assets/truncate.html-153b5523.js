@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-12e7ee9f","path":"/mysql/notes/truncate.html","title":"清空表","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1717043518000,"contributors":[{"name":"jump-and-jump","email":"984292420@qq.com","commits":1}]},"filePathRelative":"mysql/notes/truncate.md"}');export{t as data};
