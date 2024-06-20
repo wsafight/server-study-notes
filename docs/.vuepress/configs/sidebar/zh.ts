@@ -104,7 +104,6 @@ export const zh: SidebarConfig = {
       children: [
         '/redis/notes/README.md',
         '/redis/notes/regulations.md',
-        '/redis/notes/pika.md',
       ],
     },
     {
@@ -113,6 +112,14 @@ export const zh: SidebarConfig = {
         '/redis/performance/README.md',
         '/redis/performance/pipeline.md',
         '/redis/performance/roaring-bitmap.md',
+        '/redis/performance/hyperloglog.md',
+      ],
+    },
+    {
+      text: '替代品',
+      children: [
+        '/redis/other/README.md',
+        '/redis/other/pika.md',
       ],
     },
   ],
