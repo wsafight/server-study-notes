@@ -137,6 +137,7 @@ export const zh: SidebarConfig = {
       text: '工具使用',
       children: [
         '/devops/tools/README.md',
+        '/devops/tools/jenkins.md',
       ],
     }, 
   ]
