@@ -124,4 +124,20 @@ export const zh: SidebarConfig = {
       ],
     },
   ],
+  '/devops/': [
+    {
+      text: '理论知识',
+      children: [
+        '/devops/notes/README.md',
+        '/devops/notes/what.md',
+        '/devops/notes/devsecops.md',
+      ],
+    }, 
+    {
+      text: '工具使用',
+      children: [
+        '/devops/tools/README.md',
+      ],
+    }, 
+  ]
 }
