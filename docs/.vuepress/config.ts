@@ -1,7 +1,10 @@
-import { defaultTheme, defineUserConfig } from 'vuepress'
+import { defineUserConfig } from 'vuepress'
+import { viteBundler } from '@vuepress/bundler-vite'
+import { defaultTheme } from '@vuepress/theme-default'
 import { navbar, sidebar } from './configs'
 
 export default defineUserConfig({
+  bundler: viteBundler(),
   base: '/server-study-notes/',
   locales: {
     // 键名是该语言所属的子路径

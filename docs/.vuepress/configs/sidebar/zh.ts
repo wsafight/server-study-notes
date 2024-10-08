@@ -128,9 +128,9 @@ export const zh: SidebarConfig = {
     {
       text: '理论知识',
       children: [
-        '/devops/notes/README.md',
-        '/devops/notes/what.md',
-        '/devops/notes/devsecops.md',
+        '/devops/theory/README.md',
+        '/devops/theory/what.md',
+        '/devops/theory/devsecops.md',
       ],
     }, 
     {

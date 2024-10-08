@@ -24,5 +24,12 @@ export const zh: NavbarConfig = [
       '/redis/notes/README.md', 
       '/redis/performance/README.md', 
     ],
+  },
+  {
+    text: 'DevOps',
+    children: [
+      '/devops/theory/README.md', 
+      '/devops/tools/README.md', 
+    ],
   }
 ]
