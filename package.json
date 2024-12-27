@@ -6,16 +6,21 @@
   "author": "wsafight <984292420@qq.com>",
   "license": "MIT",
   "private": false,
+  "packageManager": "pnpm@9.12.3",
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+      "dev": "astro dev",
+      "start": "astro dev",
+      "build": "astro check && astro build",
+      "preview": "astro preview",
+      "astro": "astro"
   },
   "devDependencies": {
-    "@vuepress/bundler-vite": "2.0.0-rc.17",
-    "@vuepress/theme-default": "2.0.0-rc.52",
-    "sass-embedded": "1.79.4",
-    "vue": "^3.5.11",
-    "vuepress": "2.0.0-rc.17"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+    "@astrojs/starlight": "0.30.3",
+    "astro": "5.1.1",
+    "sharp": "0.33.5",
+    "@astrojs/check": "0.9.4",
+    "typescript": "5.7.2",
+    "starlight-sidebar-topics": "0.3.0",
+    "starlight-image-zoom": "0.10.0"
+  }
 }
