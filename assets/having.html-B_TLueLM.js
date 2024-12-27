@@ -1,0 +1,7 @@
+import{_ as a,c as n,b as s,o as i}from"./app--XYqrjBE.js";const t={};function l(r,e){return i(),n("div",null,e[0]||(e[0]=[s(`<h1 id="使用-having-进行业务统计处理" tabindex="-1"><a class="header-anchor" href="#使用-having-进行业务统计处理"><span>使用 having 进行业务统计处理</span></a></h1><p>在 SQL 中增加 HAVING 子句原因是，WHERE 关键字无法与合计函数一起使用。</p><p>如：从 table_name 中聚合用户 id，然后分析数据大于 10000 的用户</p><div class="language-SQL line-numbers-mode" data-highlighter="prismjs" data-ext="SQL" data-title="SQL"><pre><code><span class="line">SELECT userId,count(*) AS total</span>
+<span class="line">FROM table_name</span>
+<span class="line">where get_time &gt; &#39;2024-01-01 00:00:00&#39;</span>
+<span class="line">group by userId</span>
+<span class="line">having total &gt; 10000</span>
+<span class="line">limit 100</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>注意索引！</p>`,5)]))}const c=a(t,[["render",l],["__file","having.html.vue"]]),p=JSON.parse('{"path":"/mysql/notes/having.html","title":"使用 having 进行业务统计处理","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1709262324000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":2}]},"filePathRelative":"mysql/notes/having.md"}');export{c as comp,p as data};

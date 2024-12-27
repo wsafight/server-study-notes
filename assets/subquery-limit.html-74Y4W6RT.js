@@ -1,0 +1,40 @@
+import{_ as n,c as e,b as a,o as i}from"./app--XYqrjBE.js";const l={};function d(c,s){return i(),e("div",null,s[0]||(s[0]=[a(`<h1 id="mysql-子查询中不能使用-limit" tabindex="-1"><a class="header-anchor" href="#mysql-子查询中不能使用-limit"><span>MYSQL 子查询中不能使用 LIMIT</span></a></h1><p>查询语句如下:</p><div class="language-SQL line-numbers-mode" data-highlighter="prismjs" data-ext="SQL" data-title="SQL"><pre><code><span class="line">select</span>
+<span class="line">  *</span>
+<span class="line">from</span>
+<span class="line">  test</span>
+<span class="line">where</span>
+<span class="line">  code_ver IN (</span>
+<span class="line">    select DISTINCT</span>
+<span class="line">      code_ver</span>
+<span class="line">    from</span>
+<span class="line">      test</span>
+<span class="line">    where</span>
+<span class="line">      code_ver NOT LIKE &#39;%DevBld%&#39;</span>
+<span class="line">    ORDER by</span>
+<span class="line">      date DESC</span>
+<span class="line">    LIMIT</span>
+<span class="line">      10</span>
+<span class="line">  );</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>此时，MYSQL 会报错，需要在子查询的外面再包一层就可以了。即：</p><div class="language-SQL line-numbers-mode" data-highlighter="prismjs" data-ext="SQL" data-title="SQL"><pre><code><span class="line">select</span>
+<span class="line">  *</span>
+<span class="line">from</span>
+<span class="line">  test</span>
+<span class="line">where</span>
+<span class="line">  code_ver IN (</span>
+<span class="line">    select</span>
+<span class="line">      *</span>
+<span class="line">    from</span>
+<span class="line">      (</span>
+<span class="line">        select DISTINCT</span>
+<span class="line">          code_ver</span>
+<span class="line">        from</span>
+<span class="line">          test</span>
+<span class="line">        where</span>
+<span class="line">          code_ver NOT LIKE &#39;%DevBld%&#39;</span>
+<span class="line">        ORDER by</span>
+<span class="line">          date DESC</span>
+<span class="line">        LIMIT</span>
+<span class="line">          10</span>
+<span class="line">      ) as t1</span>
+<span class="line">  );</span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div>`,5)]))}const r=n(l,[["render",d],["__file","subquery-limit.html.vue"]]),v=JSON.parse('{"path":"/mysql/notes/subquery-limit.html","title":"MYSQL 子查询中不能使用 LIMIT","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1691424102000,"contributors":[{"name":"wsafight","email":"984292420@qq.com","commits":1}]},"filePathRelative":"mysql/notes/subquery-limit.md"}');export{r as comp,v as data};
