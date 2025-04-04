@@ -141,6 +141,32 @@ export default defineConfig({
               }
             ],
           },
+          {
+            label: "PostgreSQL",
+            link: "/pgsql/pigsty",
+            icon: "open-book",
+            items: [
+              {
+                label: "操作与管理",
+                items: [
+                  'pgsql/pigsty',
+                ]
+              }, 
+            ]
+          },
+          {
+            label: "DuckDB",
+            link: "/duck/intro",
+            icon: "open-book",
+            items: [
+              {
+                label: "操作与管理",
+                items: [
+                  'duck/intro',
+                ]
+              }, 
+            ]
+          }
         ]),
         starlightImageZoom(),
       ],
