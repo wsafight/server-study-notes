@@ -15,9 +15,9 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "服务端学习笔记",
-      social: {
-        github: "https://github.com/wsafight/server-study-notes",
-      },
+      social: [
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/wsafight/server-study-notes' },
+      ],
       locales: {
         root: {
           label: "简体中文",
