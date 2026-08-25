@@ -64,36 +64,15 @@ Open <http://localhost:4321/server-study-notes/>.
 | `bun run preview` | Preview the production build locally |
 | `bun outdated` | Check for dependency updates |
 
-## Writing Notes
+## Documentation
 
-1. Add a Markdown file under `src/content/docs/<topic>/`.
-2. Include an accurate, concise `title` and `description` in the frontmatter.
-3. Explain the problem and scope before documenting diagnosis, examples, risks,
-   and verification.
-4. Add the slug to the correct learning stage in `astro.config.mjs` so the page
-   is not orphaned.
-5. Use lowercase fenced-code language identifiers such as `sql`, `bash`, or
-   `javascript`.
-6. Update the topic's `index.md` learning path when adding a new subject.
-7. Run `bun run build` before submitting the change.
+Only Markdown under `src/content/docs/` is published. Each topic's `index.md`
+defines its learning path, `astro.config.mjs` defines the sidebar, and the
+top-level `docs/` directory is an unpublished historical archive.
 
-Example:
-
-```markdown
----
-title: Query Execution Plan
-description: Reading and interpreting MySQL EXPLAIN output.
----
-
-## Overview
-
-Document content goes here.
-```
-
-Only files in `src/content/docs/` are loaded by the current Starlight content
-collection. Each topic's `index.md` defines its learning path, while
-`astro.config.mjs` defines the site sidebar. The top-level `docs/` directory
-contains legacy notes and is not published by the site.
+Read the [contribution and writing guide](./CONTRIBUTING.md) before adding,
+revising, or migrating an article. It defines article structure, version and
+safety notes, navigation updates, and pre-submission checks.
 
 ## Project Structure
 
@@ -103,6 +82,8 @@ contains legacy notes and is not published by the site.
 |-- src/content/docs/           # Published Markdown documentation
 |-- src/content.config.ts       # Starlight content collection
 |-- src/styles/custom.css       # Site-specific styles
+|-- docs/README.md              # Status of unpublished legacy notes
+|-- CONTRIBUTING.md             # Contribution and documentation standards
 |-- astro.config.mjs            # Site, navigation, and plugin configuration
 |-- bun.lock                    # Bun dependency lockfile
 `-- .github/workflows/docs.yml  # GitHub Pages deployment workflow
@@ -110,11 +91,9 @@ contains legacy notes and is not published by the site.
 
 ## Dependency Notes
 
-Check available releases with `bun outdated`, then upgrade packages explicitly
-with `bun update --latest <package>`. TypeScript is pinned to the latest
-compatible 6.x release because `astro check` does not currently support the
-TypeScript 7 programmatic API. Keep TypeScript on 6.x and run `bun run build`
-after every dependency update.
+Check releases with `bun outdated`, then upgrade packages explicitly with
+`bun update --latest <package>`. TypeScript currently stays on the Astro Check
+compatible 6.x line. Run a frozen install and full build after every update.
 
 ## Deployment
 

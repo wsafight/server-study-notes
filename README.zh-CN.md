@@ -55,31 +55,13 @@ bun run dev
 | `bun run preview` | 本地预览生产构建 |
 | `bun outdated` | 检查可更新的依赖 |
 
-## 编写文档
+## 文档维护
 
-1. 在 `src/content/docs/<主题>/` 下新增 Markdown 文件。
-2. Frontmatter 包含准确、简洁的 `title` 和 `description`。
-3. 文章先说明问题和适用边界，再给出诊断、示例、风险与验证方式。
-4. 将文档 slug 加到 `astro.config.mjs` 对应学习阶段，避免创建孤立页面。
-5. 代码围栏语言标识使用小写，例如 `sql`、`bash` 或 `javascript`。
-6. 新增主题时同步维护该目录的 `index.md` 学习路径。
-7. 提交前运行 `bun run build`。
+只有 `src/content/docs/` 下的 Markdown 会发布到网站。每个一级主题的 `index.md` 组织学习路径，
+`astro.config.mjs` 定义侧边栏，根目录 `docs/` 中的旧稿仅作历史归档。
 
-示例：
-
-```markdown
----
-title: 查询执行计划
-description: 阅读并分析 MySQL EXPLAIN 输出。
----
-
-## 概述
-
-在这里编写正文。
-```
-
-当前 Starlight 内容集合只加载 `src/content/docs/` 下的文件。每个一级主题的 `index.md` 负责
-组织学习顺序，`astro.config.mjs` 负责网站侧边栏。根目录的 `docs/` 保存旧版笔记，不会发布到网站。
+新增、修改或迁移文章前请阅读[贡献与写作规范](./CONTRIBUTING.md)，其中包含文章结构、版本说明、
+安全示例、链接维护和提交前检查要求。
 
 ## 项目结构
 
@@ -89,6 +71,8 @@ description: 阅读并分析 MySQL EXPLAIN 输出。
 ├── src/content/docs/           # 网站发布的 Markdown 文档
 ├── src/content.config.ts       # Starlight 内容集合配置
 ├── src/styles/custom.css       # 网站自定义样式
+├── docs/README.md              # 未发布旧稿的归档说明
+├── CONTRIBUTING.md             # 贡献流程与文档写作规范
 ├── astro.config.mjs            # 站点、导航和插件配置
 ├── bun.lock                    # Bun 依赖锁文件
 └── .github/workflows/docs.yml  # GitHub Pages 部署工作流
@@ -97,8 +81,7 @@ description: 阅读并分析 MySQL EXPLAIN 输出。
 ## 依赖维护
 
 先通过 `bun outdated` 检查新版本，再使用 `bun update --latest <package>` 明确升级指定依赖。
-当前 TypeScript 固定在最新兼容的 6.x 版本，因为 `astro check` 暂不支持 TypeScript 7 的
-编程 API。请将 TypeScript 保持在 6.x，并在每次升级依赖后重新运行 `bun run build`。
+TypeScript 当前保持在 Astro Check 兼容的 6.x 版本。每次升级后都要执行冻结安装和完整构建。
 
 ## 自动部署
 
