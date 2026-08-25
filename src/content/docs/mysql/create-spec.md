@@ -1,21 +1,53 @@
 ---
-title: 建表规范
+title: MySQL 建表设计检查清单
+description: 从命名、数据类型、约束、索引和生命周期建立可执行的建表规范。
 ---
 
-## 强制规定
+建表规范应服务于数据正确性和可维护性，不应把某个团队的命名偏好或固定行数阈值当作数据库定律。
 
-- 表达是与否的概念的字段，必须使用is_xxxx 的方式命名
-- 禁用保留字，如：desc 、status、type、range、match 等 [官方保留字](https://dev.mysql.com/doc/refman/en/keywords.html)
-- 字段命名必须使用下划线，长度建议不要超过5个下划线
-- 主键索引名为PK_字段名；唯一索引名为 UK_字段名；普通索引名为 IDX_字段名
-- 小数类型为decimal，禁止使用 float 和 double
-- 表达金额时请使用整数，用分来表示，金额字段使用 fee 结尾，即 discount_fee
-- varchar 是可变长字符串，不预先分配存储空间，长度不要超过5000，如果存储长度大于此值，定义字段类型为text，独立出来一张表，用主键来对应，避免影响其他字段索引效率
-- 时间类型字段强制使用 datetime
-- 表字段必须要有注释；如果修改字段含义或对字段表示的状态追加时，需要更新字段注释
+## 基础定义
 
-## 推荐
+- 默认使用 InnoDB，并显式选择 `utf8mb4` 字符集和适合业务的排序规则。
+- 表、列和索引使用一致的命名风格，避免 MySQL 保留字。
+- 每张业务表定义稳定主键；不要默认把可变业务字段作为聚簇主键。
+- 用 `NOT NULL`、`DEFAULT`、`UNIQUE`、`CHECK` 和外键表达真实约束，而不只依赖应用校验。
+- 为表和含义不直观的列添加注释，枚举状态同时维护状态说明。
 
-- 字段允许适当冗余，以提高查询性能，但必须考虑’数据一致’冗余字段应遵循
-- 合适的字符存储长度，不但节约数据库表空间、节约索引存储，更重要的是提升检索速度
-- 单表行数超过 500 万行或者单表容量超过 2 GB，才推荐分库分表
+## 数据类型
+
+- 整数选择能够覆盖增长周期的最小安全类型，并统一外键列类型。
+- 金额使用最小货币单位的整数或 `DECIMAL`，不要使用 `FLOAT`、`DOUBLE` 保存精确金额。
+- 根据时区、范围和自动初始化需求选择 `DATETIME` 或 `TIMESTAMP`，不存在所有时间列都必须用同一种类型的规则。
+- `VARCHAR` 长度按业务上限设计；大文本是否拆表取决于访问模式、行宽和索引需求，而不是固定的 5000 字符阈值。
+- 结构稳定且需要约束/索引的属性优先使用独立列，不要全部塞入 JSON。
+
+## 索引
+
+- 从实际查询的过滤、连接、排序和分组方式反推联合索引。
+- 唯一业务规则使用唯一索引保护，避免并发下只靠“先查后插”。
+- 控制重复和低收益索引，因为每个索引都会增加写入与存储成本。
+- 索引命名应在团队内保持一致，例如 `uk_<columns>` 和 `idx_<columns>`。
+
+## 生命周期与运维
+
+- 明确数据保留、归档、删除和空间回收策略。
+- 预估单表增长、DDL 时间、备份窗口和恢复时间，而不是达到固定 500 万行后才机械分表。
+- 记录表的负责人、数据敏感级别和上下游依赖。
+
+示例：
+
+```sql
+CREATE TABLE orders (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  order_no VARCHAR(32) NOT NULL,
+  customer_id BIGINT UNSIGNED NOT NULL,
+  amount DECIMAL(18, 2) NOT NULL,
+  status VARCHAR(20) NOT NULL,
+  created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+    ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_orders_order_no (order_no),
+  KEY idx_orders_customer_created (customer_id, created_at)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+```

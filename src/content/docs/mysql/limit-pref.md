@@ -1,38 +1,53 @@
 ---
 title: 优化深度分页
+description: 使用 Keyset Pagination、覆盖索引和延迟关联降低大 OFFSET 的扫描成本。
 ---
 
-如果目前是移动端的话，建议使用 [移动端列表查询最佳实践](https://segmentfault.com/a/1190000022549636)。
+`LIMIT offset, size` 需要找到并丢弃前 `offset` 行。偏移量越大，扫描、回表和排序成本通常越高；并发写入时还可能出现重复或遗漏记录。
 
-深度查询的问题在于开发者使用 limit 10000,10 时候，是先查询  10010 条记录后抛弃前 10000 条数据，结果最终返回给用户。
+## 优先使用游标分页
 
-如果能在体验上提升查询功能，优先提升查询功能。让用户无需深度查询。
+按创建时间和唯一主键组成稳定顺序，把上一页最后一条记录作为游标：
 
-如果可以使用其他技术，则使用 ES 来处理查询。
-
-如果依次查询下一页或在 PC 端也采取下拉加载的方式。通过记住上一次的查询条件，也可以大大优化查询。可以参考 [移动端列表查询最佳实践](https://segmentfault.com/a/1190000022549636)。同时也要考虑在前端使用虚拟列表以避免卡顿。
-
-上述条件都走不通的情况下，《高性能的 MYSQL》介绍了一种优化方法：
-
-```SQL
-SELECT id, desc FROM book ORDER BY title LIMIT 50, 5
+```sql
+SELECT id, created_at, title
+FROM books
+WHERE created_at < :last_created_at
+   OR (created_at = :last_created_at AND id < :last_id)
+ORDER BY created_at DESC, id DESC
+LIMIT 20;
 ```
 
-优化为
+对应索引：
 
-
-```SQL
-SELECT id, desc FROM book
-  INNER JOIN (
-    SELECT id FROM book
-    ORDER BY
-      title
-    limit
-      50, 5
-  ) AS lim USING (id)
+```sql
+CREATE INDEX idx_books_created_id
+ON books (created_at DESC, id DESC);
 ```
 
-这种方法被称为“延迟连接”，它允许服务器再不访问行的情况下检查索引中尽可能少的数据（覆盖索引）。一旦找到所需的行，则让他们与整个表联接，从当前行再进行检索。
+首屏不传游标条件。游标字段必须形成唯一、稳定的排序，否则相同时间的数据可能重复或遗漏。对移动端滚动列表和“下一页”场景，Keyset Pagination 通常比页码更合适。
 
-同时，代码中写分页查询逻辑时，若 count 为 0 应直接返回，避免执行后面的分页语句。
+## 必须跳到指定页时
 
+可以先只从覆盖索引中定位主键，再关联完整行：
+
+```sql
+SELECT b.id, b.title, b.description
+FROM books AS b
+JOIN (
+  SELECT id
+  FROM books
+  ORDER BY created_at DESC, id DESC
+  LIMIT 100000, 20
+) AS page_ids USING (id)
+ORDER BY b.created_at DESC, b.id DESC;
+```
+
+这种延迟关联减少了深度扫描阶段的回表和行宽，但仍然要跳过 100000 个索引项，不能消除 OFFSET 的线性成本。
+
+## 其他注意事项
+
+- 搜索结果需要相关度、复杂筛选或跨字段检索时，可评估专用搜索引擎。
+- 精确总页数可能比取一页数据更昂贵，可以异步统计或只返回“是否有下一页”。
+- 分页期间数据持续变化时，明确需要实时视图还是一致快照。
+- 前端虚拟列表只能降低渲染成本，不能优化数据库 OFFSET。

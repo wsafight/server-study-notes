@@ -2,9 +2,8 @@
 import { defineConfig } from "astro/config";
 import { unified } from "@astrojs/markdown-remark";
 import starlight from "@astrojs/starlight";
+import starlightImageZoom from "starlight-image-zoom";
 import starlightSidebarTopics from "starlight-sidebar-topics";
-import starlightImageZoom from 'starlight-image-zoom'
-
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,13 +13,17 @@ export default defineConfig({
     processor: unified(),
   },
   redirects: {
-    "/": "/server-study-notes/mysql/paradigm",
+    "/": "/server-study-notes/mysql/",
   },
   integrations: [
     starlight({
       title: "服务端学习笔记",
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/wsafight/server-study-notes' },
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/wsafight/server-study-notes",
+        },
       ],
       locales: {
         root: {
@@ -29,148 +32,214 @@ export default defineConfig({
         },
       },
       plugins: [
- 
         starlightSidebarTopics([
           {
             label: "MySQL",
-            link: "/mysql/paradigm",
-            icon: "open-book",
+            link: "/mysql/",
+            icon: "database",
             items: [
               {
-                label: "操作与管理",
+                label: "入门与数据建模",
                 items: [
+                  "mysql",
+                  "mysql/architecture",
                   "mysql/paradigm",
                   "mysql/create-spec",
-                  "mysql/sub-treasury",
-                  "mysql/split-table",
-                  "mysql/group-concat",
-                  "mysql/temp-table",
-                  "mysql/sync-table",
-                  "mysql/pt-duplicate-key-checker",
-                  "mysql/count",
-                  "mysql/binlog",
-                  "mysql/auto-increment",
-                  "mysql/uid",
-                  "mysql/over-max-id",
-                  "mysql/subquery-limit",
-                  "mysql/clear",
-                  "mysql/match",
-                  "mysql/procedure",
-                  "mysql/cte",
-                  "mysql/update-line-lock",
-                  "mysql/exclusive-lock",
-                  "mysql/having",
-                  "mysql/truncate",
+                  "mysql/not-null",
+                  "mysql/off-page",
                 ],
               },
               {
-                label: "分析与优化",
+                label: "主键与标识",
                 items: [
-                  "mysql/architecture",
-                  "mysql/methodology",
+                  "mysql/auto-increment",
+                  "mysql/auto-increment-err",
+                  "mysql/over-max-id",
+                  "mysql/uid",
+                ],
+              },
+              {
+                label: "索引与性能分析",
+                items: [
+                  "mysql/database-index",
+                  "mysql/why-b-plus-tree",
+                  "mysql/b-plus-tree",
+                  "mysql/low-dimension-index",
                   "mysql/explain",
                   "mysql/slow-query-log",
-                  "mysql/re-building",
-                  "mysql/database-index",
-                  "mysql/not-null",
-                  "mysql/off-page",
-                  "mysql/b-plus-tree",
-                  "mysql/why-b-plus-tree",
-                  "mysql/soar",
-                  "mysql/low-dimension-index",
+                  "mysql/methodology",
                   "mysql/limit-pref",
+                  "mysql/temp-table",
+                  "mysql/soar",
+                  "mysql/pt-duplicate-key-checker",
+                ],
+              },
+              {
+                label: "SQL 查询与语义",
+                items: [
+                  "mysql/count",
+                  "mysql/group-concat",
+                  "mysql/having",
+                  "mysql/cte",
+                  "mysql/subquery-limit",
+                  "mysql/match",
+                  "mysql/procedure",
+                  "mysql/number-null",
+                  "mysql/sum-npe",
+                ],
+              },
+              {
+                label: "事务与并发",
+                items: [
+                  "mysql/transaction-isolation",
+                  "mysql/mvcc",
+                  "mysql/exclusive-lock",
+                  "mysql/update-line-lock",
+                  "mysql/deadlock",
+                ],
+              },
+              {
+                label: "日志、恢复与变更",
+                items: [
+                  "mysql/binlog",
+                  "mysql/replication",
+                  "mysql/backup-recovery",
+                  "mysql/online-ddl",
+                  "mysql/re-building",
+                  "mysql/clear",
+                  "mysql/truncate",
+                  "mysql/sync-table",
+                ],
+              },
+              {
+                label: "分库分表",
+                items: [
+                  "mysql/sub-treasury",
+                  "mysql/split-table",
                   "mysql/data-skew",
                 ],
               },
-              {
-                label: "安全与错误",
-                items: [
-                  "mysql/auto-increment-err",
-                  "mysql/sum-npe",
-                  "mysql/number-null",
-                ],
-              }
             ],
           },
           {
             label: "Linux",
-            link: "/linux/instance-quota",
-            icon: "open-book",
+            link: "/linux/",
+            icon: "setting",
             items: [
               {
-                label: "操作与管理",
+                label: "排查方法",
                 items: [
-                  'linux/instance-quota',
-                  'linux/account-expired',
-                ]
-              }, 
+                  "linux",
+                  "linux/troubleshooting",
+                  "linux/perf",
+                ],
+              },
               {
-                label: "分析与优化",
+                label: "资源诊断",
                 items: [
-                  'linux/perf',
-                  'linux/uptime',
-                  'linux/sysstat-mpstat',
-                  'linux/sysstat-pidstat',
-                  'linux/sysstat-iostat',
-                  'linux/stress',
-                  'linux/vmstat',
-                ]
-              }
+                  "linux/uptime",
+                  "linux/sysstat-mpstat",
+                  "linux/sysstat-pidstat",
+                  "linux/vmstat",
+                  "linux/memory",
+                  "linux/sysstat-iostat",
+                  "linux/disk-io",
+                  "linux/network",
+                ],
+              },
+              {
+                label: "系统运维",
+                items: [
+                  "linux/systemd-journal",
+                  "linux/account-expired",
+                  "linux/instance-quota",
+                  "linux/stress",
+                ],
+              },
             ],
           },
           {
             label: "Redis",
-            link: "/redis/regulations",
-            icon: "open-book",
+            link: "/redis/",
+            icon: "seti:redis",
             items: [
               {
-                label: "操作与管理",
+                label: "基础与数据模型",
                 items: [
-                  'redis/regulations',
-                  'redis/hyperloglog',
-                ]
-              }, 
-              {
-                label: "分析与优化",
-                items: [
-                  'redis/pipeline',
-                  'redis/roaring-bitmap',
-                ]
+                  "redis",
+                  "redis/data-structures",
+                  "redis/regulations",
+                  "redis/hyperloglog",
+                  "redis/roaring-bitmap",
+                ],
               },
               {
-                label: "替代品",
+                label: "缓存与并发",
                 items: [
-                  'redis/pika',
-                ]
-              }
+                  "redis/cache-patterns",
+                  "redis/pipeline",
+                  "redis/distributed-lock",
+                ],
+              },
+              {
+                label: "可靠性与诊断",
+                items: [
+                  "redis/persistence",
+                  "redis/high-availability",
+                  "redis/memory-diagnostics",
+                ],
+              },
+              {
+                label: "兼容替代方案",
+                items: ["redis/pika"],
+              },
             ],
           },
           {
             label: "PostgreSQL",
-            link: "/pgsql/pigsty",
-            icon: "open-book",
+            link: "/pgsql/",
+            icon: "seti:pgsql",
             items: [
               {
-                label: "操作与管理",
+                label: "原理与查询",
                 items: [
-                  'pgsql/pigsty',
-                ]
-              }, 
-            ]
+                  "pgsql",
+                  "pgsql/architecture",
+                  "pgsql/indexes",
+                  "pgsql/explain",
+                ],
+              },
+              {
+                label: "事务与维护",
+                items: [
+                  "pgsql/vacuum",
+                  "pgsql/locks",
+                  "pgsql/backup-recovery",
+                ],
+              },
+              {
+                label: "部署方案",
+                items: ["pgsql/pigsty"],
+              },
+            ],
           },
           {
             label: "DuckDB",
-            link: "/duck/intro",
-            icon: "open-book",
+            link: "/duck/",
+            icon: "seti:db",
             items: [
               {
-                label: "操作与管理",
+                label: "嵌入式分析",
                 items: [
-                  'duck/intro',
-                ]
-              }, 
-            ]
-          }
+                  "duck",
+                  "duck/intro",
+                  "duck/data-files",
+                  "duck/query-optimization",
+                  "duck/embedding",
+                ],
+              },
+            ],
+          },
         ]),
         starlightImageZoom(),
       ],

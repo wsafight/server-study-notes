@@ -1,28 +1,30 @@
 ---
-title: MySQL 自增 id 重复利用
+title: 理解自增 ID 的复用与空洞
+description: 说明 MySQL 不同版本的自增计数器持久化行为，以及业务不应依赖连续 ID 的原因。
 ---
 
-在 MySQL 8.0 版本前，当 MySQL 重新启动服务时候，innodb 的自增 ID，会在服务重启后，自动设置为记录中最大 ID + 1。
-```SQL
-select max(id)+1 from tbl_name
-```
+自增列只负责为新记录分配通常唯一的数值，不保证连续，也不应承载“记录绝不会被复用”之外的业务语义。
 
-也就是说，如果在 MySQL 停止服务前一刻如果将最新的一条信息删除的话，数据表再插入记录，ID 依旧是之前的删除的那一条。
+## 版本差异
 
-极端情况下，数据库重启服务前删除了当前表最大 ID 的记录，服务恢复后插入记录再去关联 ID 就会出现问题。
+MySQL 5.7 及更早版本中，InnoDB 的自增计数器主要保存在内存。服务重启后，会根据表中已有最大值重新初始化计数器。如果最大 ID 对应的记录在重启前被删除，后续插入可能再次使用该数值。
 
-在 8.0 版本前的解决方案有两个
-- 软删除（不进行物理删除，而是在数据表中添加一个字段来确定当前数据是否可用）
-- 使用 innodb_autoinc_persistent
-```SQL
-innodb_autoinc_persistent=on
-innodb_autoinc_persistent_interval=1
-```
+MySQL 8.0 会持久化自增计数器的变化，正常重启或崩溃恢复后不会仅按当前 `MAX(id) + 1` 回退计数器。但以下操作仍可能影响后续值：
 
-innodb_autoinc_persistent 配置为 on 责表示将 AUTO_INCREMENT 值实时存储在聚集索引根页。off 则采用原有方式只存储在内存中（可能会丢失）。
+- 显式插入较大的 ID。
+- 执行 `ALTER TABLE ... AUTO_INCREMENT = ...`。
+- `TRUNCATE TABLE` 重置表。
+- 导入、恢复或切换到行为不同的旧版本实例。
 
-innodb_autoinc_persistent_interval 配置则表示每多少次间隔插入数据，如果自增为 1，innodb_autoinc_persistent_interval 为 100。就是每插入 100 条数据就会持久化一次，如果自增为 2 则每插入 50 条数据会持久化一次。
+## 为什么会出现空洞
 
-auto_incrememt_increment = 1 时候
-- innodb_autoinc_persistent_interval=1 时性能损耗在 1% 以下。
-- innodb_autoinc_persistent_interval=100 时性能损耗可以忽略。
+事务回滚、`INSERT IGNORE`、冲突更新、批量分配和主从切换都可能消耗 ID 却不留下最终记录。因此不能使用“ID 是否连续”判断数据是否丢失，也不能用 `MAX(id)` 代替精确行数。
+
+## 业务设计建议
+
+- 关联关系使用外键值或明确的业务唯一键，不要依赖 ID 连续性。
+- 获取本次插入 ID 时使用驱动返回值或同一连接上的 `LAST_INSERT_ID()`。
+- 增量同步使用 binlog position、GTID、更新时间与主键组合游标，不要只记录“最后一个连续 ID”。
+- 从旧版 MySQL 升级前，测试删除最大 ID、重启和恢复场景。
+
+如果业务要求全局不可复用的标识，应使用具备明确持久化和故障模型的 ID 服务，而不是推断自增计数器的内部状态。

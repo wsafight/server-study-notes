@@ -1,40 +1,41 @@
 ---
-title: 使用 pipeline 减少 RTT
+title: 使用 Pipeline 减少 Redis RTT
+description: 解释 Redis Pipeline 的吞吐收益、ioredis 用法以及原子性和批次限制。
 ---
 
-Redis 中有很多命令不支持批量操作，需要多次发送命令。
-多次发送命令就会有多次网络请求。客户端与服务端网络延迟越大。网络请求消耗的时间就越长。
+客户端逐条发送 Redis 命令时，每条命令都要等待一次网络往返时间（RTT）。Pipeline 允许客户端连续发送一批命令，再批量读取响应，从而减少等待网络往返的次数并提高吞吐。
 
-使用 pipeline 命令可以一次在网络请求执行多条命令。该指令将多条命令在内存中排队，然后一次将它们发送到 Redis 服务端。这样性能可以提高 50% ~ 300%。
+Pipeline 不会把多条命令变成一条 Redis 命令，也不保证只发生一次系统调用。收益取决于网络延迟、批次大小、命令成本和客户端实现。
 
-事实上 pipeline 不仅仅可以减少客户端的等待时间，它还可以极大地提高了 Redis 服务器中每秒可以执行的操作数量。这是因为，Redis 命令都会执行系统调用 read 和 write 方法，这意味着从用户态到内核态。上下文切换会带来巨大的速度损失。
-
-当使用 pipeline 时，多个命令只会涉及到一次系统调用，大大减少了系统的上下文切换。
-
-使用 JavaScript ioredis 为例。
+## ioredis 示例
 
 ```js
-// 开启 pipeline
 const pipeline = redis.pipeline();
-pipeline.set("foo", "bar");
-pipeline.del("cc");
-pipeline.exec((err, results) => {
-  // 无论如何 err 是 null, result 返回一个数组。
-  // 该数组根据执行命令顺序返回错误或结果
-  // 看出 pipeline 中间出错不会终止，而是继续执行下一条命令
-  // result 数组里面是元组 [err, result]
-});
 
-// 也提供了链式调用
-redis
-  .pipeline()
-  .set("foo", "bar")
-  .del("cc")
-  .exec((err, results) => {});
+pipeline.set('user:42:name', 'Alice');
+pipeline.get('user:42:name');
 
-// `exec` 也可以返回 Promise
-const promise = redis.pipeline().set("foo", "bar").get("foo").exec();
-promise.then((result) => {
-  // result === [[null, 'OK'], [null, 'bar']]
-});
+const results = await pipeline.exec();
+
+for (const [error, value] of results) {
+  if (error) {
+    console.error(error);
+    continue;
+  }
+  console.log(value);
+}
 ```
+
+连接、超时等批次级错误仍可能让 `exec()` 直接失败；命令执行错误通常出现在结果数组中。调用方必须同时处理这两类错误。
+
+## Pipeline 不是事务
+
+Pipeline 中某条命令失败时，其他命令仍可能执行。它不提供隔离性或原子性，也不能让后续命令使用前一条命令刚返回的结果。
+
+- 需要原子执行一组命令时，评估 `MULTI`/`EXEC` 或 Lua/Redis Function。
+- 同一种批量操作优先使用 `MGET`、`MSET` 等原生命令。
+- Redis Cluster 中，一批 Key 可能分布在不同节点；客户端需要按 slot 拆分并分别发送。
+
+## 控制批次大小
+
+Pipeline 过大会占用客户端和服务端缓冲区，延长单批处理时间，并让超时后的重试成本上升。不要套用固定的“100 条”限制，应同时约束命令数和总字节数，通过压测选择满足 P99 延迟和内存预算的批次。

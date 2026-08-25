@@ -1,82 +1,77 @@
 ---
-title: 索引优化
+title: MySQL 索引设计与验证
+description: 根据查询模式设计联合索引，并用执行计划验证选择性、覆盖和写入成本。
 ---
 
-1.维度高的列创建索引
+索引的目标是减少需要读取和排序的数据，而不是让每个查询都出现 `key`。设计索引必须从真实 SQL、参数分布和读写比例出发。
 
-数据列中不重复值出现的个数,这个数量越高,维度就越高
-如数据表中存在8行数据a ,b ,c,d,a,b,c,d这个表的维度为4
-要为维度高的列创建索引,如性别和年龄,那年龄的维度就高于性别
-性别这样的列不适合创建索引,因为维度过低
+## 从查询模式设计联合索引
 
-2.对 where,on,group by,order by 中出现的列使用索引
+例如订单列表查询：
 
-3.对较小的数据列使用索引,这样会使索引文件更小,同时内存中也可以装载更多的索引键
-
-4.为较长的字符串使用前缀索引
-
-5.不要过多创建索引,除了增加额外的磁盘空间外,对于DML操作的速度影响很大,因为其每增删改一次就得从新建立索引
-
-6.使用组合索引,可以减少文件索引大小,在使用时速度要优于多个单列索引
-
-
-```sqL
-SELECT `sname` FROM `stu` WHERE `age`+10=30;-- 不会使用索引,因为所有索引列参与了计算
-
-SELECT `sname` FROM `stu` WHERE LEFT(`date`,4) <1990; -- 不会使用索引,因为使用了函数运算,原理与上面相同
-
-SELECT * FROM `houdunwang` WHERE `uname` LIKE'后盾%' -- 走索引
-
-SELECT * FROM `houdunwang` WHERE `uname` LIKE "%后盾%" -- 不走索引
-
--- 正则表达式不使用索引,这应该很好理解,所以为什么在SQL中很难看到regexp关键字的原因
-
--- 字符串与数字比较不使用索引;
-CREATE TABLE `a` (`a` char(10));
-EXPLAIN SELECT * FROM `a` WHERE `a`="1" -- 走索引
-EXPLAIN SELECT * FROM `a` WHERE `a`=1 -- 不走索引
-
-select * from dept where dname='xxx' or loc='xx' or deptno=45 --如果条件中有or,即使其中有条件带索引也不会使用。换言之,就是要求使用的所有字段,都必须建立索引, 我们建议大家尽量避免使用or 关键字
-
--- 如果mysql估计使用全表扫描要比使用索引快,则不使用索引
+```sql
+SELECT id, created_at, amount
+FROM orders
+WHERE customer_id = 42
+  AND status = 'paid'
+  AND created_at >= '2026-08-01'
+ORDER BY created_at DESC, id DESC
+LIMIT 50;
 ```
 
-前缀索引兼顾索引大小和查询速度
+可以评估以下索引：
 
-组合索引
+```sql
+CREATE INDEX idx_orders_customer_status_created
+ON orders (customer_id, status, created_at DESC, id DESC);
+```
 
-vc_Name,vc_City,i_Age
-vc_Name,vc_City
-vc_Name
+前两列用于等值过滤，后两列用于范围和稳定排序。具体列顺序仍要结合条件是否总会出现、各列分布以及其他查询复用情况验证。
 
-只是在大数据导入时,可以先删除索引,再批量插入数据,最后再添加索引;
+## 重要原则
 
-使用查询提示
+- 联合索引遵循最左前缀，前导列缺失时通常无法高效定位后续列。
+- 高选择性经常有利，但低基数列在数据倾斜或联合索引中也可能很有效。
+- 索引包含查询所需列时可以形成覆盖索引，减少回表，但索引也会变宽。
+- 长字符串可以使用前缀索引，但前缀可能无法覆盖查询，也会降低唯一性判断能力。
+- 每个二级索引都会增加写入、Buffer Pool 和磁盘成本，应删除确认冗余的索引。
 
-- USE INDEX
-- FORCE INDEX
-- iGNORE INDEX
+## 保持条件可索引
 
-使用 USE 提示会让 MySOL 从指定的索引中选择一个。FORCE 会对基于开销的优化器产生影响，让优化器更倾向于索引扫描而不是全表扫描。
+对索引列做计算、函数或隐式类型转换，可能让普通索引无法直接定位：
 
-添加或者改变表上的索引并不会影响到 一个在特定索引中指 定的硬编码 SQL 语句，所以查询提示应该是你最后考虑的方案。
+```sql
+-- 不利于普通 age 索引
+WHERE age + 10 = 30
 
+-- 改为
+WHERE age = 20
 
-频繁执行且速度很快的 SQL 语句通常被认为不是必须要调整的。但提升这些查询的速度能够为系统资源带来非常大的益处， 这些资源使得你的数据库系统能够处理更多的 SQL 语句。
+-- 不利于普通 created_at 索引
+WHERE YEAR(created_at) = 2026
 
-SHOW INDEX STATISTICS 是谷歌的一个补丁，收集 sql 语句并监控引擎使用。
+-- 改为半开区间
+WHERE created_at >= '2026-01-01'
+  AND created_at < '2027-01-01'
+```
 
+MySQL 8.0 也支持函数索引或生成列索引，但应先确认表达式稳定且查询确实需要。
 
-[mysqld]
-全面查询日志
-general_log=1
-general_log_file=/path/to/file
+`LIKE 'prefix%'` 可以利用字符串索引范围，`LIKE '%middle%'` 通常不能。`OR` 并非必然放弃索引，优化器可能使用 Index Merge 或改写为多个范围；是否有效要看成本。
 
-慢 sql 日志
-slow_query_log=1
-slow_query_log_file=/path/to/file 
-long_query_time=0.2
-log_output=FILE
+## 验证而不是猜测
 
-二进制日志
-log_bin=/path/to/file
+```sql
+EXPLAIN ANALYZE
+SELECT ...;
+```
+
+比较实际扫描行数、循环次数、排序和总耗时，并使用接近生产的数据分布测试。优化器选全表扫描有时是正确结果，例如表很小或条件会返回大部分行。
+
+删除疑似无用索引前，可在 MySQL 8.0 中先将普通二级索引设为不可见并观察：
+
+```sql
+ALTER TABLE orders ALTER INDEX idx_old INVISIBLE;
+```
+
+索引提示 `USE INDEX`、`FORCE INDEX` 应作为最后手段，因为数据分布变化后，硬编码选择可能比优化器计划更差。

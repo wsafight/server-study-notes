@@ -1,52 +1,79 @@
 ---
-title: 存储过程
+title: MySQL 存储过程的使用边界
+description: 介绍存储过程的事务封装、权限、错误处理和版本维护成本。
 ---
 
-存储过程是一组为了完成特定功能的 SQL 语句集合。使用存储过程的目的是将常用或复杂的工作预先用 SQL 语句写好并用一个指定名称存储起来，这个过程经编译和优化后存储在数据库服务器中，因此称为存储过程。当以后需要数据库提供与已定义好的存储过程的功能相同的服务时，只需调用 “CALL 存储过程名字” 即可自动完成。
+存储过程把一组 SQL 保存在数据库中，并通过 `CALL` 执行。它可以减少多次客户端往返，并让靠近数据的事务逻辑由数据库统一执行，但会增加部署、调试、权限和跨数据库迁移成本。
 
-在单机时代，存储过程被大量使用，但在互联网时代，存储过程已经“过时”了。
+## 事务示例
 
-阿里巴巴的 Java 开发手册明确禁止使用存储过程，因为存储过程难以调试和扩展，同时也没有移植性。
+下面的过程在两个账户间转移额度，并在任何 SQL 异常时回滚：
 
-任何技术都要分场景的。对于开发者来说，分表场景下就可以使用存储过程来更新表结构。
+```sql
+DELIMITER //
 
-例如一下存储语句会更新库中 100 张表。
-
-```SQL
--- 如果在 db_name 库中存在存储过程 procedure_name,直接删除
-DROP PROCEDURE IF EXISTS `db_name`.`procedure_name`;
-
--- DEFINER 为谁有权利执行？
-CREATE DEFINER=`useUser`@`%` PROCEDURE `procedure_name`()
+CREATE PROCEDURE transfer_quota(
+  IN p_from_id BIGINT UNSIGNED,
+  IN p_to_id BIGINT UNSIGNED,
+  IN p_amount DECIMAL(18, 2)
+)
+SQL SECURITY INVOKER
 BEGIN
-    -- 定义 tableName 变量
-	DECLARE `@tableName` VARCHAR(50);
-    -- 定义 sqlStr 变量
-    DECLARE `@sqlStr` VARCHAR(2560);
+  DECLARE EXIT HANDLER FOR SQLEXCEPTION
+  BEGIN
+    ROLLBACK;
+    RESIGNAL;
+  END;
 
-    -- 定义 i 变量
-    DECLARE i int;
+  IF p_amount <= 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'amount must be positive';
+  END IF;
 
-    -- 设置 i 为 0
-    set i = 0;
-    while i < 100 do
-        -- 设置表名
-        SET `@tableName` = CONCAT("tabel_name_", i);
+  START TRANSACTION;
 
-        -- 拼接修改语句
-        SET @sqlStr = CONCAT("ALTER TABLE ", `@tableName` ," ADD COLUMN `col_name` INT(2) NULL COMMENT '注释',ALGORITHM=INPLACE, LOCK=NONE;");
-        -- 预处理，避免 sql 注入
-        PREPARE stmt FROM @sqlStr;
-        -- 执行修改语句
-        EXECUTE stmt;
+  UPDATE accounts
+  SET quota = quota - p_amount
+  WHERE id = p_from_id
+    AND quota >= p_amount;
 
-        set i = i + 1;
-    END WHILE;
-END;
+  IF ROW_COUNT() = 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'insufficient quota';
+  END IF;
+
+  UPDATE accounts
+  SET quota = quota + p_amount
+  WHERE id = p_to_id;
+
+  IF ROW_COUNT() = 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'target account not found';
+  END IF;
+
+  COMMIT;
+END//
+
+DELIMITER ;
 ```
 
-直接使用 CALL 即可：
+调用方式：
 
-```SQL
-CALL procedure_name()
+```sql
+CALL transfer_quota(1001, 1002, 10.00);
 ```
+
+调用方仍需处理死锁或连接中断，并根据业务幂等键决定是否重试。
+
+## 适合与不适合的场景
+
+适合：
+
+- 边界明确、数据密集且需要一个本地事务完成的操作。
+- 多个客户端必须共享同一段数据库逻辑。
+- 运维团队具备存储程序的版本、测试和观测能力。
+
+不适合：
+
+- 经常变化、依赖外部服务或需要复杂领域测试的业务逻辑。
+- 需要同时支持多种数据库的应用。
+- 批量执行大量 DDL。DDL 会隐式提交，不能依靠一个存储过程原子回滚所有表结构变更。
+
+避免硬编码个人账号的 `DEFINER`。根据权限模型选择 `SQL SECURITY INVOKER` 或受控的定义者账号，并把过程定义纳入和应用代码相同的迁移、评审与回滚流程。

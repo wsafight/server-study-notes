@@ -1,18 +1,26 @@
 ---
-title: 使用 having 进行业务统计处理
+title: 正确使用 WHERE 与 HAVING
+description: 区分聚合前过滤和聚合后过滤，并优化统计查询的数据访问量。
 ---
 
-在 SQL 中增加 HAVING 子句原因是，WHERE 关键字无法与合计函数一起使用。
+`WHERE` 在分组和聚合之前过滤明细行，`HAVING` 在分组之后过滤聚合结果。能够放在 `WHERE` 的条件应尽早过滤，减少后续聚合的数据量。
 
-如：从 table_name 中聚合用户 id，然后分析数据大于 10000 的用户
+下面的查询统计指定时间后订单数超过 10000 的用户：
 
-```SQL
-SELECT userId,count(*) AS total
-FROM table_name
-where get_time > '2024-01-01 00:00:00'
-group by userId
-having total > 10000
-limit 100
+```sql
+SELECT
+  user_id,
+  COUNT(*) AS order_count
+FROM orders
+WHERE created_at >= '2026-01-01'
+GROUP BY user_id
+HAVING COUNT(*) > 10000
+ORDER BY order_count DESC
+LIMIT 100;
 ```
 
-注意索引！
+- 时间条件针对明细行，放在 `WHERE`。
+- `COUNT(*) > 10000` 依赖聚合结果，放在 `HAVING`。
+- MySQL 允许 `HAVING order_count > 10000` 引用别名，但直接写聚合表达式更容易移植到其他数据库。
+
+可以评估 `(created_at, user_id)` 或 `(user_id, created_at)` 等索引，但最优顺序取决于时间范围的选择性、分组方式和其他查询。使用 `EXPLAIN ANALYZE` 验证扫描行数、临时表与排序成本。

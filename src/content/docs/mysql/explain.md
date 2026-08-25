@@ -1,24 +1,53 @@
 ---
-title: 使用 EXPLAIN 来分析 SQL
+title: 使用 EXPLAIN 分析执行计划
+description: 解读 MySQL 的访问方式、扫描估算和附加操作，并用 EXPLAIN ANALYZE 校验实际执行。
 ---
 
-Query Execution Plan 是查询执行计划。而 EXPLAIN 可以帮助开发人员分析 SQL 问题,EXPLAIN 显示了 MySQL 如何使用索引来处理 SELECT 语句以及连接表,可以帮助选择更好的索引和写出更优化的查询语句。
+`EXPLAIN` 展示优化器计划如何访问表、选择索引、连接和处理结果。它适合回答“数据库准备做什么”，但传统输出中的行数和成本大多是估算值。
 
-当 MysQL 要执行一个 SQL 查询的时候，它首先会对该 SOL 语句进行语法检查，然后构造一个 QEP, QEP 决定了 MySQL 从底层存储引擎中获取信息的方式。如果想要查看 MySQL 查询优 化器为 SQL 语句构造的 QEP，只需要在 SELECT 语句前加上如下的EXPLAIN 关键字前缀。即：
-
-```SQL
-EXPLAIN SELECT * FROM inventory WHERE item_id = 1232
+```sql
+EXPLAIN
+SELECT id, amount
+FROM orders
+WHERE customer_id = 42
+ORDER BY created_at DESC
+LIMIT 20;
 ```
 
-注意：根据底层使用的不同存储引擎， 受影响的行数这个指标可能是一个估计值，但也可能是一个精确值。即使受影响的行数是一个估计值，但通常，这个估计值也足以使优化器做出一个有充分依据的决定。
+MySQL 8.0 还可以使用更详细的格式：
 
-生成的 QEP 并不确定，它可能会根据很多因素而发生改变。MySQL 不会将一个 QEP 和某个给定查询绑定， QEP 将由 SQL 语句每次执行时的实际情况确定。即便使用存储过程也是如此。尽管在存储过程中 SQL 语句都是预先解析过的，但 QEP 仍然会在每次调用存储过程的时候才被确定。
+```sql
+EXPLAIN FORMAT=TREE SELECT ...;
+EXPLAIN FORMAT=JSON SELECT ...;
+```
 
-有两个可选的关键字可以和 EXPLAIN 命令一起使用: PARTITIONS 和 EXTENDED 关键字。
+## 常见字段
 
-EXPLAIN PARTITIONS 可以获取分区表的信息，partitions 会有分区表的信息，如果该命令用于检查针对非分区表的查询，则不会产生错误，但列的值 partitions 始终为 NULL。
+| 字段 | 关注点 |
+| --- | --- |
+| `type` | 表访问方式，例如 `const`、`ref`、`range`、`index`、`ALL` |
+| `possible_keys` | 优化器认为可能使用的索引 |
+| `key`、`key_len` | 实际选择的索引和使用长度 |
+| `ref` | 用于索引查找的列或常量 |
+| `rows` | 预计需要读取的行数 |
+| `filtered` | 读取后预计通过条件的比例 |
+| `Extra` | 覆盖索引、排序、临时表等附加信息 |
 
-EXPLAIN EXTENDED 可以显示扩展的信息，这些信息不是 EXPLAIN 输出的一部分，但可以通过发出 SHOW WARNINGS 后面的语句来查看 EXPLAIN。
+不能只凭一个字段下结论。小表使用 `ALL` 可能比索引访问更快；`Using filesort` 表示需要额外排序，不代表一定写磁盘；`Using temporary` 也需要结合结果规模和耗时判断。
 
+## 校验实际执行
 
+`EXPLAIN ANALYZE` 会真正执行查询，并返回每个节点的实际时间、行数和循环次数：
 
+```sql
+EXPLAIN ANALYZE
+SELECT id, amount
+FROM orders
+WHERE customer_id = 42
+ORDER BY created_at DESC
+LIMIT 20;
+```
+
+它比估算计划更能发现基数估算偏差、循环放大和错误的连接顺序。由于查询会被实际执行，不要直接对未知成本的语句或有副作用的操作使用；应先在测试环境或受控数据范围内验证。
+
+如果估算与实际差异很大，应检查统计信息、数据倾斜、相关列和参数分布，再决定更新统计信息、创建直方图、调整索引或改写查询。

@@ -1,49 +1,40 @@
 ---
-title: CPU 性能分析工具 mpstat
+title: 使用 mpstat 分析 CPU
+description: 通过各逻辑 CPU 的用户态、内核态、中断、等待和虚拟化指标定位负载。
 ---
 
-mpstat 是一个多核 CPU 性能分析工具，用来实时查看每个 CPU 的性能指标，以及所有 CPU 的平均指标。
-
-它需要在 Linux 系统上安装 sysstat。sysstat 包含了很多工具，用于监控和分析 Linux 系统性能。在使用之前需要安装对应的包。
+`mpstat` 来自 `sysstat` 软件包，可以同时查看全部 CPU 的平均值和每个逻辑 CPU 的使用情况。
 
 ```bash
-apt install sysstat
+sudo apt install sysstat
+mpstat -P ALL 1 5
 ```
 
-安装完成后，执行一下对应的命令。
+`-P ALL` 显示所有逻辑 CPU，`1 5` 表示每秒采样一次，共五次。判断实时问题时应关注后续区间数据，而不是只看自启动以来的平均值。
 
-```bash
-mpstat
-```
+![mpstat 默认输出](./sysstat-mpstat.png)
 
-![mpstat](./sysstat-mpstat.png)
+![mpstat 全部 CPU 输出](./sysstat-mpstat-all.png)
 
-这里只能看到全部 CPU 指标数据，没法看到每个对应的 CPU 状态。添加参数即可。
+## 指标含义
 
-```bash
-# -P ALL 表示监控所有的 CPU
-# 数字 3 表示每隔 3 s 输出一组数据
-# 后面还可以加一个数字表示采样次数，不加则循环采集
-mpstat -P ALL 3
-```
-![mpstat-all](./sysstat-mpstat-all.png)
+| 指标 | 含义 |
+| --- | --- |
+| `%usr` | 普通用户态代码使用的 CPU 时间 |
+| `%nice` | 调整过 nice 值的用户态进程时间 |
+| `%sys` | 内核态代码使用的 CPU 时间 |
+| `%iowait` | CPU 空闲且系统存在未完成 I/O 的时间 |
+| `%irq` | 处理硬中断的时间 |
+| `%soft` | 处理软中断的时间 |
+| `%steal` | 虚拟 CPU 等待宿主机调度的时间 |
+| `%idle` | 其余空闲时间 |
 
-我们看一下对应的参数含义：
+## 判断思路
 
-|   参数   | 描述  |
-|  ---------  | --------- |
-| CPU  | 单个 CPU,还是全部 CPU |
-| %usr  | internal 时间段里，用户态的 CPU 时间(%) |
-| %nice  | internal 时间段里，“友好”进程的 CPU 时间(%) |
-| %sys | internal 时间段里，内核的 CPU 时间(%) |
-| $iowait | internal 时间段里，硬盘 IO 等待时间(%) |
-| %irq | internal 时间段里，处理硬中断所占用的 CPU 时间(%) | 
-| %soft | internal 时间段里，处理软中断所占用的 CPU 时间(%) |
-| %idle | CPU 除去等待磁盘 IO 操作外的因为任何原因而空闲的时间闲置时间(%) |
+- 所有 CPU 的 `%usr` 都很高，通常是计算密集型负载。
+- 单个 CPU 长期繁忙而其他 CPU 空闲，可能是单线程热点、CPU 亲和性或中断分布问题。
+- `%sys` 或 `%soft` 较高时，应继续检查系统调用、网络包处理和中断。
+- `%iowait` 较高时结合 `iostat`，不要直接把它解释为 CPU 本身性能不足。
+- 虚拟机中 `%steal` 较高，说明宿主机资源竞争可能影响当前实例。
 
-
-此外  %steal，%guest，%gnice 三个参数和使用虚拟机相关。
-
-根据上述指标可以看到 CPU 处于空闲状态。当然了，作为学习，开发者可以监控时候实时使用软件，这样你就可以观测不同软件会对 CPU 有什么样的影响。会加深你对工具的理解。
-
-注：以上所有操作均在虚拟机 Ubuntu 22.04 GUI 系统。
+再使用 `pidstat -u`、`top -H` 或 `perf` 把系统级异常定位到进程、线程和调用栈。

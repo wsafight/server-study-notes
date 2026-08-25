@@ -1,29 +1,44 @@
 ---
-title: 使用行级锁处理并发
+title: 使用条件 UPDATE 避免并发覆盖
+description: 通过单条原子 UPDATE、影响行数和乐观锁处理额度扣减等并发写入。
 ---
 
-如果当前 MySQL 中事务的隔离界别是 RC 或者更高级别，会使用行级锁来处理对应 UPDATE 操作。
+先查询、在应用中计算、再写回的“读改写”流程会产生丢失更新。两个请求可能读到相同旧值，然后把相同结果写回。
 
-对比以下两个代码操作：
-
-```SQL
-SELECT `quota` FROM `table_name` WHERE `id` = 'xxx'
-
--- 添加判断 quota >= 10 ，直接返回额度不足
--- 执行数据操作 newQuota = quota - 10
-
-UPDATE `table_name` SET `quota` = newQuota WHERE `id` = 'xxx'
+```sql
+SELECT quota FROM accounts WHERE id = 42;
+-- 应用计算 quota - 10
+UPDATE accounts SET quota = :new_quota WHERE id = 42;
 ```
 
+如果业务只是扣减额度，可以把检查和更新合并为一条 SQL：
 
-```SQL
-UPDATE `table_name` SET `quota` = `quota` - 10 WHERE `id` = 'xxx' AND `quota` >= 10
+```sql
+UPDATE accounts
+SET quota = quota - 10
+WHERE id = 42
+  AND quota >= 10;
 ```
 
-如果当前用户量请求较少的情况下，上述两个代码都没有问题。但是如果用户量稍微大一点，第一个代码就会出现异常，由于多个请求同一时间都会获取到相同额度，减少额度后更新都是相同的数据。从而导致实际的额度远远小于数据库额度。
+InnoDB 会对匹配的索引记录加锁，并在锁内重新检查条件。调用方必须检查影响行数：
 
-第二个代码不会出现上述问题，由于行级锁的存在，UPDATE 语句只能串行执行。
+- `1` 表示扣减成功。
+- `0` 表示记录不存在或额度不足，需要按业务返回或继续查询原因。
 
-注：当前也可以使用乐观锁（注意业务）和分布式锁来处理，但不要使用对应编程语言或操作系统的锁机制处理，因为对应处理只会对单机系统有效。
+主键条件让锁定范围最小。缺少索引的条件可能扫描并锁住大量记录，因此原子 SQL 仍需要正确索引。
 
+## 乐观锁
 
+需要在应用中完成复杂计算时，可以增加版本列：
+
+```sql
+UPDATE accounts
+SET quota = :new_quota,
+    version = version + 1
+WHERE id = :id
+  AND version = :old_version;
+```
+
+影响行数为 0 表示数据已被其他事务修改，应用应重新读取并在有限次数内重试。
+
+无论使用条件更新还是乐观锁，都要考虑请求超时后的不确定结果。对转账、扣款等操作增加业务幂等键和唯一约束，避免客户端重试导致重复执行。
