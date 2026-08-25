@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import { unified } from "@astrojs/markdown-remark";
 import starlight from "@astrojs/starlight";
 import starlightSidebarTopics from "starlight-sidebar-topics";
 import starlightImageZoom from 'starlight-image-zoom'
@@ -9,6 +10,9 @@ import starlightImageZoom from 'starlight-image-zoom'
 export default defineConfig({
   site: "https://wsafight.github.io",
   base: "server-study-notes",
+  markdown: {
+    processor: unified(),
+  },
   redirects: {
     "/": "/server-study-notes/mysql/paradigm",
   },
