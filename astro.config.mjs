@@ -12,9 +12,6 @@ export default defineConfig({
   markdown: {
     processor: unified(),
   },
-  redirects: {
-    "/": "/server-study-notes/mysql/",
-  },
   integrations: [
     starlight({
       title: "服务端学习笔记",
@@ -43,6 +40,7 @@ export default defineConfig({
                 items: [
                   "mysql",
                   "mysql/architecture",
+                  "mysql/connection-pooling",
                   "mysql/paradigm",
                   "mysql/create-spec",
                   "mysql/not-null",
@@ -67,6 +65,7 @@ export default defineConfig({
                   "mysql/low-dimension-index",
                   "mysql/explain",
                   "mysql/slow-query-log",
+                  "mysql/performance-schema",
                   "mysql/methodology",
                   "mysql/limit-pref",
                   "mysql/temp-table",
@@ -142,6 +141,7 @@ export default defineConfig({
                   "linux/sysstat-pidstat",
                   "linux/vmstat",
                   "linux/memory",
+                  "linux/cgroups",
                   "linux/sysstat-iostat",
                   "linux/disk-io",
                   "linux/network",
@@ -151,6 +151,7 @@ export default defineConfig({
                 label: "系统运维",
                 items: [
                   "linux/systemd-journal",
+                  "linux/file-descriptors",
                   "linux/account-expired",
                   "linux/instance-quota",
                   "linux/stress",
@@ -159,9 +160,57 @@ export default defineConfig({
             ],
           },
           {
+            label: "网络与 HTTP",
+            link: "/network/",
+            icon: "link",
+            items: [
+              {
+                label: "请求链路",
+                items: [
+                  "network",
+                  "network/tcp",
+                  "network/dns",
+                  "network/http",
+                  "network/tls",
+                  "network/reverse-proxy",
+                ],
+              },
+            ],
+          },
+          {
+            label: "服务可靠性",
+            link: "/reliability/",
+            icon: "approve-check-circle",
+            items: [
+              {
+                label: "目标与观测",
+                items: [
+                  "reliability",
+                  "reliability/slo",
+                  "reliability/observability",
+                ],
+              },
+              {
+                label: "流量与正确性",
+                items: [
+                  "reliability/timeout-retry",
+                  "reliability/idempotency",
+                  "reliability/rate-limiting",
+                ],
+              },
+              {
+                label: "发布与响应",
+                items: [
+                  "reliability/graceful-shutdown",
+                  "reliability/incident-response",
+                ],
+              },
+            ],
+          },
+          {
             label: "Redis",
             link: "/redis/",
-            icon: "seti:redis",
+            icon: "server",
             items: [
               {
                 label: "基础与数据模型",
@@ -186,6 +235,7 @@ export default defineConfig({
                 items: [
                   "redis/persistence",
                   "redis/high-availability",
+                  "redis/latency-diagnostics",
                   "redis/memory-diagnostics",
                 ],
               },
@@ -198,28 +248,45 @@ export default defineConfig({
           {
             label: "PostgreSQL",
             link: "/pgsql/",
-            icon: "seti:pgsql",
+            icon: "database",
             items: [
               {
-                label: "原理与查询",
+                label: "原理与建模",
                 items: [
                   "pgsql",
                   "pgsql/architecture",
-                  "pgsql/indexes",
-                  "pgsql/explain",
+                  "pgsql/data-types-modeling",
+                  "pgsql/transactions-isolation",
                 ],
               },
               {
-                label: "事务与维护",
+                label: "查询与性能",
                 items: [
+                  "pgsql/indexes",
+                  "pgsql/jsonb",
+                  "pgsql/planner-statistics",
+                  "pgsql/explain",
+                  "pgsql/partitioning",
+                ],
+              },
+              {
+                label: "运行与维护",
+                items: [
+                  "pgsql/connection-pooling",
+                  "pgsql/monitoring",
                   "pgsql/vacuum",
                   "pgsql/locks",
-                  "pgsql/backup-recovery",
+                  "pgsql/schema-migrations",
                 ],
               },
               {
-                label: "部署方案",
-                items: ["pgsql/pigsty"],
+                label: "高可用、安全与部署",
+                items: [
+                  "pgsql/replication",
+                  "pgsql/backup-recovery",
+                  "pgsql/security",
+                  "pgsql/pigsty",
+                ],
               },
             ],
           },
@@ -229,18 +296,42 @@ export default defineConfig({
             icon: "seti:db",
             items: [
               {
-                label: "嵌入式分析",
+                label: "定位与分析 SQL",
                 items: [
                   "duck",
                   "duck/intro",
+                  "duck/analytical-sql",
+                ],
+              },
+              {
+                label: "文件与对象存储",
+                items: [
                   "duck/data-files",
+                  "duck/parquet-layout",
+                  "duck/object-storage",
+                ],
+              },
+              {
+                label: "性能与并发",
+                items: [
                   "duck/query-optimization",
+                  "duck/concurrency-transactions",
+                ],
+              },
+              {
+                label: "嵌入与数据流水线",
+                items: [
                   "duck/embedding",
+                  "duck/extensions-security",
+                  "duck/postgres-integration",
+                  "duck/data-pipelines",
                 ],
               },
             ],
           },
-        ]),
+        ], {
+          exclude: ["/"],
+        }),
         starlightImageZoom(),
       ],
       customCss: ["./src/styles/custom.css"],

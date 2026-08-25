@@ -4,7 +4,7 @@
 
 这是一个面向实际服务端工程场景的学习笔记集合，使用
 [Astro Starlight](https://starlight.astro.build/) 构建并发布。内容主要关注数据库原理、
-生产运维、性能分析和常见故障处理。
+生产运维、网络协议、可靠性设计、性能分析和常见故障处理。
 
 在线文档：<https://wsafight.github.io/server-study-notes/>
 
@@ -12,14 +12,18 @@
 
 - **MySQL：** 数据建模、索引与查询、事务并发、复制、备份恢复和在线 DDL
 - **Linux：** 系统化故障排查，以及 CPU、内存、磁盘、网络和 systemd 运维
+- **网络与 HTTP：** TCP、DNS、HTTP、TLS、反向代理和负载均衡
+- **服务可靠性：** SLO、可观测性、超时重试、幂等、限流、优雅停机和事故响应
 - **Redis：** 数据结构、缓存一致性、持久化、高可用、分布式锁和内存诊断
-- **PostgreSQL：** 架构、索引、执行计划、VACUUM、锁、恢复和 Pigsty 部署
-- **DuckDB：** 嵌入式分析、文件查询、性能优化和应用集成
+- **PostgreSQL：** 数据建模、事务、规划器统计、索引、分区、JSONB、观测、迁移、恢复和安全
+- **DuckDB：** 分析 SQL、Parquet 布局、对象存储、并发、PostgreSQL 集成和可重跑数据流水线
 
 网站为每个主题提供独立学习路径：
 
 - [MySQL](https://wsafight.github.io/server-study-notes/mysql/)
 - [Linux](https://wsafight.github.io/server-study-notes/linux/)
+- [网络与 HTTP](https://wsafight.github.io/server-study-notes/network/)
+- [服务可靠性](https://wsafight.github.io/server-study-notes/reliability/)
 - [Redis](https://wsafight.github.io/server-study-notes/redis/)
 - [PostgreSQL](https://wsafight.github.io/server-study-notes/pgsql/)
 - [DuckDB](https://wsafight.github.io/server-study-notes/duck/)

@@ -4,8 +4,8 @@
 
 A collection of practical server-side engineering notes, published as an
 [Astro Starlight](https://starlight.astro.build/) site. The notes focus on
-database internals, production operations, performance analysis, and common
-failure modes.
+database internals, production operations, network protocols, reliability,
+performance analysis, and common failure modes.
 
 Online documentation: <https://wsafight.github.io/server-study-notes/>
 
@@ -15,17 +15,23 @@ Online documentation: <https://wsafight.github.io/server-study-notes/>
   online schema changes
 - **Linux:** systematic troubleshooting across CPU, memory, disk, network, and
   systemd services
+- **Networking and HTTP:** TCP, DNS, HTTP, TLS, reverse proxies, and load
+  balancing
+- **Service reliability:** SLOs, observability, retries, idempotency, overload
+  protection, graceful shutdown, and incident response
 - **Redis:** data structures, cache consistency, persistence, high availability,
   distributed locks, and memory diagnostics
-- **PostgreSQL:** architecture, indexes, query plans, VACUUM, locks, recovery,
-  and Pigsty deployments
-- **DuckDB:** embedded analytics, file queries, performance, and application
-  integration
+- **PostgreSQL:** data modeling, transactions, planner statistics, indexes,
+  partitioning, JSONB, observability, migrations, recovery, and security
+- **DuckDB:** analytical SQL, Parquet layout, object storage, concurrency,
+  PostgreSQL integration, and reproducible data pipelines
 
 Each topic has a dedicated learning path:
 
 - [MySQL](https://wsafight.github.io/server-study-notes/mysql/)
 - [Linux](https://wsafight.github.io/server-study-notes/linux/)
+- [Networking and HTTP](https://wsafight.github.io/server-study-notes/network/)
+- [Service Reliability](https://wsafight.github.io/server-study-notes/reliability/)
 - [Redis](https://wsafight.github.io/server-study-notes/redis/)
 - [PostgreSQL](https://wsafight.github.io/server-study-notes/pgsql/)
 - [DuckDB](https://wsafight.github.io/server-study-notes/duck/)

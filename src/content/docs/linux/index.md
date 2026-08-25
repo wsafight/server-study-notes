@@ -11,7 +11,8 @@ Linux 排障的核心不是背命令，而是在尽量少扰动现场的前提�
 2. 用 [uptime](./uptime/) 判断负载趋势，再通过 [mpstat](./sysstat-mpstat/)、[vmstat](./vmstat/)区分 CPU、运行队列、I/O 等待和换页。
 3. 使用 [pidstat](./sysstat-pidstat/)把系统异常定位到进程或线程，需要函数级证据时再使用 [perf](./perf/)。
 4. 分别深入[内存与 OOM](./memory/)、[磁盘 I/O](./disk-io/)和[网络问题](./network/)。
-5. 结合 [systemd 与 Journal](./systemd-journal/)还原服务启动、退出和系统事件。
+5. 在容器环境检查 [cgroup 与 PSI](./cgroups/)，区分主机空闲和容器自身受限。
+6. 结合 [systemd 与 Journal](./systemd-journal/)和[文件描述符](./file-descriptors/)还原服务退出与资源耗尽。
 
 ## 常见排查入口
 
@@ -23,6 +24,7 @@ Linux 排障的核心不是背命令，而是在尽量少扰动现场的前提�
 | 磁盘变慢 | `iostat -xz 1`、`pidstat -d 1` | [磁盘 I/O](./disk-io/) |
 | 连接超时 | `ss`、`ip -s link`、`sar -n` | [网络问题](./network/) |
 | 服务重启 | `systemctl status`、`journalctl -u` | [systemd 与 Journal](./systemd-journal/) |
+| `Too many open files` | `/proc/<pid>/limits`、`lsof`、`ss` | [文件描述符耗尽](./file-descriptors/) |
 
 ## 生产操作原则
 
