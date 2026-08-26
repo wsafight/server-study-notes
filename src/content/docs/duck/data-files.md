@@ -115,4 +115,4 @@ COPY (
 
 ## 继续阅读
 
-长期保存分析文件时继续学习[Parquet 布局](./parquet-layout/)；规范化类型与时间字段时参见[类型、NULL 与时间语义](./types-and-time/)。
+长期保存分析文件时继续学习[Parquet 布局](./parquet-layout/)；规范化类型与时间字段时参见[类型、NULL 与时间语义](./types-and-time/)；希望理解列裁剪、Row Group 裁剪与解码实现时继续阅读[Parquet 扫描源码](./source-parquet-scan/)。

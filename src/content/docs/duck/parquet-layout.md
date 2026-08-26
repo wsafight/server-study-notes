@@ -77,4 +77,4 @@ Snappy 解压开销低，Zstandard 通常压缩率更好；实际选择取决于
 
 ## 继续阅读
 
-远程访问的请求与凭据边界参见[对象存储查询](./object-storage/)；使用固定生成数据验证布局效果参见[可复现实验](./reproducible-lab/)。
+远程访问的请求与凭据边界参见[对象存储查询](./object-storage/)；Zone Map、过滤下推与向量化扫描的关系参见[执行引擎与查询成本](./execution-engine/)；使用固定生成数据验证布局效果参见[可复现实验](./reproducible-lab/)。

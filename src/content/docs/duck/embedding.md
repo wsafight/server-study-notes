@@ -137,4 +137,4 @@ DuckDB 扩展运行在应用进程中，具有相同的数据和文件权限。�
 
 ## 继续阅读
 
-连接与写入冲突参见[并发与事务边界](./concurrency-transactions/)；持久文件的升级和备份参见[数据库文件运维](./database-operations/)。
+向量化、UDF 与结果物化的成本参见[执行引擎与查询成本](./execution-engine/)；连接与写入冲突参见[并发与事务边界](./concurrency-transactions/)；持久文件的升级和备份参见[数据库文件运维](./database-operations/)。

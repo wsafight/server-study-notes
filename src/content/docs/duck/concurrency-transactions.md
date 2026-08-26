@@ -65,4 +65,4 @@ COMMIT;
 
 ## 继续阅读
 
-应用连接和任务限流参见[在应用中嵌入 DuckDB](./embedding/)；持久文件的恢复演练参见[数据库文件运维](./database-operations/)。
+应用连接和任务限流参见[在应用中嵌入 DuckDB](./embedding/)；持久文件的恢复演练参见[数据库文件运维](./database-operations/)；需要进入行版本、Undo Buffer、WAL 与 Checkpoint 实现时继续阅读[存储与事务源码](./source-storage-transactions/)。

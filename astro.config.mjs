@@ -316,10 +316,22 @@ export default defineConfig({
               {
                 label: "性能、并发与运维",
                 items: [
+                  "duck/execution-engine",
                   "duck/query-optimization",
                   "duck/reproducible-lab",
                   "duck/concurrency-transactions",
                   "duck/database-operations",
+                ],
+              },
+              {
+                label: "源码解析",
+                items: [
+                  "duck/source-reading-guide",
+                  "duck/source-query-lifecycle",
+                  "duck/source-vectorized-execution",
+                  "duck/source-optimizer",
+                  "duck/source-storage-transactions",
+                  "duck/source-parquet-scan",
                 ],
               },
               {

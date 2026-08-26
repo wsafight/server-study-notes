@@ -5,6 +5,8 @@ description: 使用执行计划、结构化 Profiling、资源边界、查询取
 
 DuckDB 对分析查询使用向量化执行，并会在合适时并行扫描与计算。优化仍然从减少读取、传输和中间结果开始，而不是先提高线程或内存上限。
 
+如果还不能从计划判断 Hash Join、聚合、排序或结果物化为何消耗资源，先阅读[执行引擎与查询成本](./execution-engine/)建立算子与流水线模型。
+
 ## 查看执行计划
 
 ```sql
@@ -114,4 +116,4 @@ UNION ALL
 
 ## 继续阅读
 
-使用[可复现实验](./reproducible-lab/)练习采集 Profile 和证明结果等价；扫描成本主要来自文件布局时参见[Parquet 布局](./parquet-layout/)。
+先用[执行引擎与查询成本](./execution-engine/)解释计划中的算子边界，再使用[可复现实验](./reproducible-lab/)练习采集 Profile 和证明结果等价；扫描成本主要来自文件布局时参见[Parquet 布局](./parquet-layout/)。
