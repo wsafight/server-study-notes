@@ -296,30 +296,34 @@ export default defineConfig({
             icon: "seti:db",
             items: [
               {
-                label: "定位与分析 SQL",
+                label: "基础与查询正确性",
                 items: [
                   "duck",
                   "duck/intro",
                   "duck/analytical-sql",
+                  "duck/types-and-time",
                 ],
               },
               {
-                label: "文件与对象存储",
+                label: "文件、对象存储与 Lakehouse",
                 items: [
                   "duck/data-files",
                   "duck/parquet-layout",
                   "duck/object-storage",
+                  "duck/lakehouse-formats",
                 ],
               },
               {
-                label: "性能与并发",
+                label: "性能、并发与运维",
                 items: [
                   "duck/query-optimization",
+                  "duck/reproducible-lab",
                   "duck/concurrency-transactions",
+                  "duck/database-operations",
                 ],
               },
               {
-                label: "嵌入与数据流水线",
+                label: "集成、安全与数据流水线",
                 items: [
                   "duck/embedding",
                   "duck/extensions-security",

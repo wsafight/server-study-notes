@@ -68,3 +68,7 @@ S3 兼容服务还可能需要显式 Endpoint、Region、URL Style 和 TLS 设�
 ## 安全边界
 
 运行不可信 SQL 时，文件系统、网络、扩展安装和 Secret 访问都必须视为能力边界。为任务使用最小权限 Bucket Policy，只允许需要的前缀和操作，并将写出路径与原始输入路径分离。
+
+## 继续阅读
+
+需要表级快照和多引擎协议时进入[Lakehouse 表格式](./lakehouse-formats/)；扩展与凭据的隔离方式参见[扩展与安全边界](./extensions-security/)。

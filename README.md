@@ -23,8 +23,8 @@ Online documentation: <https://wsafight.github.io/server-study-notes/>
   distributed locks, and memory diagnostics
 - **PostgreSQL:** data modeling, transactions, planner statistics, indexes,
   partitioning, JSONB, observability, migrations, recovery, and security
-- **DuckDB:** analytical SQL, Parquet layout, object storage, concurrency,
-  PostgreSQL integration, and reproducible data pipelines
+- **DuckDB:** analytical SQL, type and time semantics, Parquet, lakehouse
+  formats, performance diagnostics, database operations, and data pipelines
 
 Each topic has a dedicated learning path:
 

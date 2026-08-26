@@ -88,3 +88,7 @@ ASOF LEFT JOIN quotes AS q
 - 输出 Schema、类型和时区是否符合契约。
 
 最后使用 `EXPLAIN ANALYZE` 检查查询是否重复扫描输入、生成超大中间结果或把排序与 Hash 结构推到内存边界。
+
+## 继续阅读
+
+涉及金额、空值和时间窗口时参见[类型、NULL 与时间语义](./types-and-time/)；查询正确但成本过高时进入[查询性能与资源控制](./query-optimization/)。

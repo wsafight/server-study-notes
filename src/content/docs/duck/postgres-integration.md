@@ -70,3 +70,7 @@ TO 'snapshot/orders/2026-08.parquet'
 把分析查询标记为独立 `application_name`，监控其连接数、扫描行、读取块、临时文件和复制延迟。准备 Kill Switch，在主库压力、备份或故障切换期间暂停提取。
 
 最终结果要能追溯到 PostgreSQL 恢复点或增量位点、DuckDB 版本、查询版本和输入 Manifest，才能可靠重现。
+
+## 继续阅读
+
+将提取过程做成可重跑批任务参见[数据流水线](./data-pipelines/)；快照写成长期 Parquet 时参见[Parquet 布局](./parquet-layout/)。
